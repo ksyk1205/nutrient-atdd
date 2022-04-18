@@ -11,6 +11,9 @@ sourceCompatibility = '11'
 
 configurations {
     asciidoctorExt
+    cucumberRuntime {
+        extendsFrom testImplementation
+    }
 }
 
 repositories {
@@ -26,6 +29,10 @@ dependencies {
     // rest docs
     asciidoctorExt 'org.springframework.restdocs:spring-restdocs-asciidoctor'
     testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
+
+    // cucumber
+    testImplementation 'io.cucumber:cucumber-java:7.0.0'
+    testImplementation 'io.cucumber:cucumber-junit:7.0.0'
 
     // test
     testImplementation('org.springframework.boot:spring-boot-starter-test') {
@@ -60,6 +67,7 @@ asciidoctor {
     configurations 'asciidoctorExt'
 }
 
+// static/docs 에 html 파일 생성
 bootJar {
     dependsOn asciidoctor
     from ("${asciidoctor.outputDir}/html5") {
@@ -67,9 +75,21 @@ bootJar {
     }
 }
 
+// html 파일 생성 src/main/resources/static/docs 로 복사
 task copyDocument(type: Copy) {
     dependsOn asciidoctor
 
     from file("build/docs/asciidoc")
     into file("src/main/resources/static/docs")
+}
+
+task cucumber() {
+    dependsOn assemble, testClasses
+    doLast {
+        javaexec {
+            main = "io.cucumber.core.cli.Main"
+            classpath = configurations.cucumberRuntime + sourceSets.main.output + sourceSets.test.output
+            args = ['--plugin', 'pretty', '--glue', 'com.example.nutrient.study.acceptance', 'src/test/resources/feature']
+        }
+    }
 }
