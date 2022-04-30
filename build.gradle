@@ -58,7 +58,6 @@ task testDocument(type: Test) {
     useJUnitPlatform()
     filter {
         includeTestsMatching "*.documentation.*"
-        includeTestsMatching "*.study.documentation.*"
     }
 }
 

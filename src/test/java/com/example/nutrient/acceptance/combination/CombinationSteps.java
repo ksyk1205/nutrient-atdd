@@ -34,7 +34,7 @@ public class CombinationSteps {
 
     @When("영양제 조합 생성 요청")
     public static ExtractableResponse<Response> 영양제_조합_생성_요청(String title, String content, List<String> combinationLineItemIds, String healthConditionId) {
-        Map<String, Object> createParams = createConditionCreateParams(title, content, combinationLineItemIds, Gender.ALL, healthConditionId);
+        Map<String, Object> createParams = createCombinationCreateParams(title, content, combinationLineItemIds, Gender.ALL, healthConditionId);
 
         return RestAssured.given().log().all()
                 .body(createParams)
@@ -43,7 +43,7 @@ public class CombinationSteps {
                 .then().log().all().extract();
     }
 
-    private static Map<String, Object> createConditionCreateParams(
+    private static Map<String, Object> createCombinationCreateParams(
             String title, String content, List<String> combinationLineItemIds, Gender recommendedGender, String healthConditionId) {
         Map<String, Object> params = new HashMap<>();
         params.put("title", title);

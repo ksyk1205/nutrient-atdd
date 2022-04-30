@@ -54,6 +54,6 @@ class CombinationAcceptanceTest extends AcceptanceTest {
     @Test
     void manage() {
         ExtractableResponse<Response> createResponse =
-                영양제_조합_생성_요청("무기력증에 추천", "일상이 무기력할 때 추천하는 영양제 조합입니다.", 영양제_목록, 무기력);
+                영양제_조합_생성_요청("무기력증에 추천", "<p>일상이 무기력할 때 추천하는 영양제 조합입니다.<p>", 영양제_목록, 무기력);
     }
 }
