@@ -10,11 +10,11 @@ public class HealthConditionName {
     private static final String HEALTH_CONDITION_NAME_MUST_NOT_BE_NULL = "건강 상태 이름은 비어있지 않아야 합니다.";
     private final String name;
 
-    public HealthConditionName() {
+    protected HealthConditionName() {
         this.name = null;
     }
 
-    public HealthConditionName(String name) {
+    protected HealthConditionName(String name) {
         validate(name);
         this.name = name;
     }
