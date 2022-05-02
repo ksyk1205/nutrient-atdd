@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Getter
-public class CombinationResponse {
+public class CombinationCreateResponse {
     private UUID id;
     private String title;
     private String content;
@@ -15,7 +15,7 @@ public class CombinationResponse {
     private Gender recommendedGender;
     private HealthConditionResponse healthConditionResponse;
 
-    public CombinationResponse(
+    public CombinationCreateResponse(
             UUID id,
             String title,
             String content,
