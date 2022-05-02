@@ -14,7 +14,7 @@ import javax.validation.Valid;
 import java.net.URI;
 
 @RestController
-@RequestMapping("/api/category")
+@RequestMapping("/api/categories")
 @RequiredArgsConstructor
 public class CategoryRestController {
 
@@ -23,7 +23,7 @@ public class CategoryRestController {
     @PostMapping
     public ResponseEntity<CategoryCreateResponse> create(@RequestBody @Valid CategoryCreateRequest request) {
         CategoryCreateResponse response = categoryService.create(request);
-        return ResponseEntity.created(URI.create("/api/category/" + response.getId()))
+        return ResponseEntity.created(URI.create("/api/categories/" + response.getId()))
                 .body(response);
     }
 

@@ -12,7 +12,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class categorySteps {
-    private static final String ENDPOINT = "/api/category";
+    private static final String ENDPOINT = "/api/categories";
 
     @When("카테고리 생성 요청")
     public static ExtractableResponse<Response> 카테고리_생성_요청(String name, String parentId) {
