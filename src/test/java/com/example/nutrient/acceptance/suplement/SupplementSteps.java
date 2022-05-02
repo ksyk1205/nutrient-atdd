@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
+import com.example.nutrient.acceptance.suplement.SupplementAcceptanceTest.영양제;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -18,7 +19,7 @@ import org.springframework.http.HttpStatus;
 
 public class SupplementSteps {
 
-    private static final String ENDPOINT = "/api/supplement";
+    private static final String ENDPOINT = "/api/supplements";
 
     @Given("로그인 되어 있음")
     public void 로그인_되어_있음() {
@@ -35,8 +36,8 @@ public class SupplementSteps {
     }
 
     @When("영양제 생성 요청")
-    public static ExtractableResponse<Response> 영양제_생성_요청(String name, String content, String categoryId) {
-        Map<String, Object> createParams = createSupplementCreateParams(name, content, categoryId);
+    public static ExtractableResponse<Response> 영양제_생성_요청(영양제 supplement) {
+        Map<String, Object> createParams = createSupplementCreateParams(supplement);
         return RestAssured.given().log().all()
             .body(createParams)
             .contentType(APPLICATION_JSON_VALUE)
@@ -45,11 +46,13 @@ public class SupplementSteps {
             .then().log().all().extract();
     }
 
-    private static Map<String, Object> createSupplementCreateParams(String name, String content, String categoryId) {
+    private static Map<String, Object> createSupplementCreateParams(영양제 supplement) {
         Map<String, Object> params = new HashMap<>();
-        params.put("name", name);
-        params.put("content", content);
-        params.put("categoryId", categoryId);
+        params.put("name", supplement.getName());
+        params.put("content", supplement.getContent());
+        params.put("intake", supplement.getIntake());
+        params.put("precautions", supplement.getPrecautions());
+        params.put("categoryId", supplement.getCategoryId());
         return params;
     }
 

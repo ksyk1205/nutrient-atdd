@@ -15,6 +15,12 @@ public class SupplementCreateRequest {
     private String content;
 
     @NotEmpty
+    private String intake;
+
+    @NotEmpty
+    private String precautions;
+
+    @NotEmpty
     private String categoryId;
 
 }

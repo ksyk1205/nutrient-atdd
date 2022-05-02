@@ -7,26 +7,44 @@ import static com.example.nutrient.acceptance.suplement.SupplementSteps.카테�
 import com.example.nutrient.acceptance.AcceptanceTest;
 import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;
+import javax.validation.constraints.NotEmpty;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 @DisplayName("영양제 관리")
 public class SupplementAcceptanceTest extends AcceptanceTest {
+
     private String 멀티비타민;
 
     @BeforeEach
     public void setUp() {
         super.setUp();
         멀티비타민 = 카테고리_생성되어_있음("멀티비타민");
-    
     }
 
     @Test
     @DisplayName("영양제를 관리한다")
-    public void manage(){
-        ExtractableResponse<Response> 비타민C = 영양제_생성_요청("비타민C", "피부, 힘줄, 인대 및 혈관을 만드는 중요한 단백질을 형성하는 데 사용됩니다.", 멀티비타민);
-        영양제_생성됨(비타민C.statusCode());
+    public void manage() {
+        ExtractableResponse<Response> 센트룸_멀티비타민_미네랄_구미 = 영양제_생성_요청(
+            new 영양제("센트룸_멀티비타민_미네랄_구미", "9가지 비타민과 미네랄을 한번에 섭취가능합니다.",
+                "1)1일 2구미 2)씹어서섭취 3)건조하고 서늘한 곳 보관 4)만 9세이상 섭취 권장",
+                "1)12세 이상의 섭취를 권장합니다. 2)일일섭취량을 초과하여 섭취하지 마십시오", 멀티비타민));
+        영양제_생성됨(센트룸_멀티비타민_미네랄_구미.statusCode());
+    }
+
+    @Getter
+    @AllArgsConstructor
+    static class 영양제 {
+
+        private String name;
+        private String content;
+        private String intake;
+        private String precautions;
+        private String categoryId;
+
     }
 
 }
