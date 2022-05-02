@@ -58,12 +58,11 @@ public class SupplementSteps {
 
     @Then("영양제 생성됨")
     public static void 영양제_생성됨(int statusCode) {
-        assertThat(statusCode).isEqualTo(CREATED);
+        assertThat(statusCode).isEqualTo(CREATED.value());
     }
 
     @When("영양제 수정 요청")
     public void 영양제_수정_요청() {
-        // Write code here that turns the phrase above into concrete actions
         throw new io.cucumber.java.PendingException();
     }
 
