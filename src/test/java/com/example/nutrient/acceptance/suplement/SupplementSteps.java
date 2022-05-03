@@ -4,7 +4,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
-import com.example.nutrient.acceptance.suplement.SupplementAcceptanceTest.영양제;
+import com.example.nutrient.acceptance.suplement.SupplementAcceptanceTest.영양제_생성_요청;
+import com.example.nutrient.acceptance.suplement.SupplementAcceptanceTest.영양제_수정_요청;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -14,8 +15,6 @@ import io.restassured.response.Response;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
-import org.assertj.core.api.Assertions;
-import org.springframework.http.HttpStatus;
 
 public class SupplementSteps {
 
@@ -36,7 +35,7 @@ public class SupplementSteps {
     }
 
     @When("영양제 생성 요청")
-    public static ExtractableResponse<Response> 영양제_생성_요청(영양제 supplement) {
+    public static ExtractableResponse<Response> 영양제_생성_요청(영양제_생성_요청 supplement) {
         Map<String, Object> createParams = createSupplementCreateParams(supplement);
         return RestAssured.given().log().all()
             .body(createParams)
@@ -46,7 +45,7 @@ public class SupplementSteps {
             .then().log().all().extract();
     }
 
-    private static Map<String, Object> createSupplementCreateParams(영양제 supplement) {
+    private static Map<String, Object> createSupplementCreateParams(영양제_생성_요청 supplement) {
         Map<String, Object> params = new HashMap<>();
         params.put("name", supplement.getName());
         params.put("content", supplement.getContent());
@@ -62,8 +61,25 @@ public class SupplementSteps {
     }
 
     @When("영양제 수정 요청")
-    public void 영양제_수정_요청() {
-        throw new io.cucumber.java.PendingException();
+    public static ExtractableResponse<Response> 영양제_수정_요청(영양제_수정_요청 supplement) {
+        Map<String, Object> updateParams = createSupplementUpdateParams(supplement);
+        return RestAssured.given().log().all()
+            .body(updateParams)
+            .contentType(APPLICATION_JSON_VALUE)
+            .accept(APPLICATION_JSON_VALUE)
+            .when().patch(ENDPOINT)
+            .then().log().all().extract();
+    }
+
+    private static Map<String, Object> createSupplementUpdateParams(영양제_수정_요청 supplement) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("id", supplement.getId());
+        params.put("name", supplement.getName());
+        params.put("content", supplement.getContent());
+        params.put("intake", supplement.getIntake());
+        params.put("precautions", supplement.getPrecautions());
+        params.put("categoryId", supplement.getCategoryId());
+        return params;
     }
 
     @Then("영양제 수정됨")
