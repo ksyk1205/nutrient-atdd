@@ -1,0 +1,55 @@
+package com.example.nutrient.documentation.supplement;
+
+import static com.example.nutrient.documentation.supplement.SupplementDocumentationFixture.CREATE_REQUEST;
+import static com.example.nutrient.documentation.supplement.SupplementDocumentationFixture.RESPONSE;
+import static com.example.nutrient.documentation.supplement.SupplementDocumentationFixture.getResponseFields;
+import static org.mockito.BDDMockito.any;
+import static org.mockito.BDDMockito.given;
+import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
+import static org.springframework.restdocs.payload.PayloadDocumentation.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import com.example.nutrient.application.SupplementService;
+import com.example.nutrient.application.dto.supplement.SupplementCreateRequest;
+import com.example.nutrient.documentation.Documentation;
+import com.example.nutrient.ui.SupplementController;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
+
+@WebMvcTest(SupplementController.class)
+public class SupplementDocumentation extends Documentation {
+    private final static String ENDPOINT = "/api/supplement";
+
+    @MockBean
+    private SupplementService supplementService;
+
+    @Autowired
+    private ObjectMapper objectMapper;
+
+    @Test
+    void create() throws Exception {
+        given(supplementService.create(any(SupplementCreateRequest.class))).willReturn(RESPONSE);
+
+        mockMvc.perform(post(ENDPOINT)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(CREATE_REQUEST)))
+            .andExpect(status().isCreated())
+            .andDo(print())
+            .andDo(document("supplement-create",
+                requestFields(
+                    fieldWithPath("name").description("영양제 이름"),
+                    fieldWithPath("content").description("영양제 설명"),
+                    fieldWithPath("categoryId").description("영양제 카테고리 ID")
+                ),
+                getResponseFields())
+            );
+
+    }
+
+}

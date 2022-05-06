@@ -8,6 +8,7 @@ import io.cucumber.java.en.When;
 public class PathSteps {
     @Given("지하철역이 등록되어있음")
     public static void 지하철역이_등록되어있음() {
+
     }
 
     @And("지하철 노선이 등록되어있음")
@@ -20,6 +21,7 @@ public class PathSteps {
 
     @And("로그인 되어있음")
     public static void 로그인_되어있음() {
+
     }
 
     @When("출발역에서 도착역까지의 최단 거리 경로 조회를 요청")
