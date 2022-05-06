@@ -1,4 +1,4 @@
-package com.example.nutrient.domain.repository.jpa;
+package com.example.nutrient.infra;
 
 import com.example.nutrient.domain.Supplement;
 import com.example.nutrient.domain.repository.SupplementRepository;
