@@ -1,12 +1,14 @@
 package com.example.nutrient.domain;
 
+import antlr.StringUtils;
 import java.time.LocalDate;
 import java.util.Objects;
 import javax.persistence.Embeddable;
-import javax.persistence.Embedded;
+import lombok.Getter;
 import org.apache.logging.log4j.util.Strings;
 
 @Embeddable
+@Getter
 public class SupplementContent {
 
     private static final String SERIAL_NUMBER_CANNOT_BE_EMPTY = "품목제조번호는 비어있으면 안됩니다.";
@@ -56,7 +58,8 @@ public class SupplementContent {
         this.intake = intake;
         this.mainFunctional = mainFunctional;
         this.precautions = precautions;
-        this.storageWay = storageWay;
+
+        this.storageWay = storageWay == null ? null : storageWay;
     }
 
     private void serialNumberValidation(String serialNumber) {
@@ -69,10 +72,13 @@ public class SupplementContent {
         if(permitDate == null){
             throw new IllegalArgumentException(PERMIT_DATE_CANNOT_BE_NULL);
         }
-        if(permitDate.compareTo(LocalDate.now()) > 0 ){
+        if(isOverToNow(permitDate) ){
             throw new IllegalArgumentException(PERMIT_DATE_CANNOT_OVER_NOW);
         }
 
+    }
+    private boolean isOverToNow(LocalDate permitDate) {
+        return permitDate.compareTo(LocalDate.now()) > 0;
     }
 
     private void expirationDateValidation(String expirationDate) {

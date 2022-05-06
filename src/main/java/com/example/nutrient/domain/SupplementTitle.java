@@ -5,9 +5,11 @@ import static lombok.AccessLevel.PROTECTED;
 import java.util.Objects;
 import javax.persistence.Embeddable;
 import lombok.AccessLevel;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.apache.logging.log4j.util.Strings;
 
+@Getter
 @Embeddable
 public class SupplementTitle {
     private static final String NAME_CANNOT_BE_EMPTY = "품목명은 비어있으면 안됩니다.";
