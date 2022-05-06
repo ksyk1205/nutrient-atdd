@@ -36,6 +36,7 @@ public class SupplementAcceptanceTest extends AcceptanceTest {
     @BeforeEach
     public void setUp() {
         super.setUp();
+
         홍삼제품 = 카테고리_생성되어_있음("홍삼제품");
     }
 
