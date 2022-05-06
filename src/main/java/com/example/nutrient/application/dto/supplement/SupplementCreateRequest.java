@@ -1,6 +1,7 @@
 package com.example.nutrient.application.dto.supplement;
 
 import java.time.LocalDate;
+import java.util.UUID;
 import javax.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -30,10 +31,9 @@ public class SupplementCreateRequest {
     @NotEmpty
     private String precautions;
 
-    @NotEmpty
     private String storageWay;
 
     @NotEmpty
-    private String categoryId;
+    private UUID categoryId;
 
 }
