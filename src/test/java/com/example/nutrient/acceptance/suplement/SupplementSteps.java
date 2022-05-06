@@ -12,6 +12,7 @@ import io.cucumber.java.en.When;
 import io.restassured.RestAssured;
 import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -44,13 +45,16 @@ public class SupplementSteps {
             .when().post(ENDPOINT)
             .then().log().all().extract();
     }
-
     private static Map<String, Object> createSupplementCreateParams(영양제_생성_요청 supplement) {
         Map<String, Object> params = new HashMap<>();
         params.put("name", supplement.getName());
-        params.put("content", supplement.getContent());
+        params.put("serialNumber", supplement.getSerialNumber());
+        params.put("permitDate", supplement.getPermitDate());
+        params.put("expirationDate", supplement.getExpirationDate());
         params.put("intake", supplement.getIntake());
+        params.put("mainFunctional", supplement.getMainFunctional());
         params.put("precautions", supplement.getPrecautions());
+        params.put("storageWay", supplement.getStorageWay());
         params.put("categoryId", supplement.getCategoryId());
         return params;
     }
