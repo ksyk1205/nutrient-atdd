@@ -45,12 +45,7 @@ public class SupplementContent {
 
     public SupplementContent(String serialNumber, LocalDate permitDate, String expirationDate,
         String intake, String mainFunctional, String precautions, String storageWay) {
-        serialNumberValidation(serialNumber);
-        permitDateValidation(permitDate);
-        expirationDateValidation(expirationDate);
-        intakeValidation(intake);
-        mainFunctionalValidation(mainFunctional);
-        precautionsValidation(precautions);
+        validation(serialNumber, permitDate, expirationDate, intake, mainFunctional, precautions);
 
         this.serialNumber = serialNumber;
         this.permitDate = permitDate;
@@ -58,48 +53,58 @@ public class SupplementContent {
         this.intake = intake;
         this.mainFunctional = mainFunctional;
         this.precautions = precautions;
-
-        this.storageWay = storageWay == null ? null : storageWay;
+        this.storageWay = storageWay;
     }
 
-    private void serialNumberValidation(String serialNumber) {
+    private void validation(String serialNumber, LocalDate permitDate, String expirationDate,
+        String intake, String mainFunctional, String precautions) {
+        validateSerialNumber(serialNumber);
+        validatePermitDate(permitDate);
+        validateExpirationDate(expirationDate);
+        validateIntake(intake);
+        validateMainFunctional(mainFunctional);
+        validatePrecautions(precautions);
+    }
+
+    private void validateSerialNumber(String serialNumber) {
         if (Strings.isEmpty(serialNumber)) {
             throw new IllegalArgumentException(SERIAL_NUMBER_CANNOT_BE_EMPTY);
         }
     }
 
-    private void permitDateValidation(LocalDate permitDate) {
-        if(permitDate == null){
+    private void validatePermitDate(LocalDate permitDate) {
+        if (permitDate == null) {
             throw new IllegalArgumentException(PERMIT_DATE_CANNOT_BE_NULL);
         }
-        if(isOverToNow(permitDate) ){
+        if (isAfterPermitDate(permitDate)) {
             throw new IllegalArgumentException(PERMIT_DATE_CANNOT_OVER_NOW);
         }
 
     }
-    private boolean isOverToNow(LocalDate permitDate) {
+
+    private boolean isAfterPermitDate(LocalDate permitDate) {
         return permitDate.compareTo(LocalDate.now()) > 0;
     }
 
-    private void expirationDateValidation(String expirationDate) {
+    private void validateExpirationDate(String expirationDate) {
         if (Strings.isEmpty(expirationDate)) {
             throw new IllegalArgumentException(EXPIRATION_DATE_CANNOT_BE_EMPTY);
         }
     }
 
-    private void intakeValidation(String intake) {
+    private void validateIntake(String intake) {
         if (Strings.isEmpty(intake)) {
             throw new IllegalArgumentException(INTAKE_CANNOT_BE_EMPTY);
         }
     }
 
-    private void mainFunctionalValidation(String mainFunctional) {
+    private void validateMainFunctional(String mainFunctional) {
         if (Strings.isEmpty(mainFunctional)) {
             throw new IllegalArgumentException(MAIN_FUNCTIONAL_CANNOT_BE_EMPTY);
         }
     }
 
-    private void precautionsValidation(String precautions) {
+    private void validatePrecautions(String precautions) {
         if (Strings.isEmpty(precautions)) {
             throw new IllegalArgumentException(PRECAUTIONS_CANNOT_BE_EMPTY);
         }
