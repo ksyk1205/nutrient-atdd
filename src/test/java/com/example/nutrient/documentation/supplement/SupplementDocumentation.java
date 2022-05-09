@@ -24,11 +24,10 @@ import org.springframework.http.MediaType;
 
 @WebMvcTest(SupplementController.class)
 public class SupplementDocumentation extends Documentation {
-    private final static String ENDPOINT = "/api/supplement";
+    private final static String ENDPOINT = "/api/supplements";
 
     @MockBean
     private SupplementService supplementService;
-
     @Autowired
     private ObjectMapper objectMapper;
 
@@ -43,8 +42,14 @@ public class SupplementDocumentation extends Documentation {
             .andDo(print())
             .andDo(document("supplement-create",
                 requestFields(
-                    fieldWithPath("name").description("영양제 이름"),
-                    fieldWithPath("content").description("영양제 설명"),
+                    fieldWithPath("name").description("품목명"),
+                    fieldWithPath("serialNumber").description("품목제조번호"),
+                    fieldWithPath("permitDate").description("허가 일자"),
+                    fieldWithPath("expirationDate").description("유통기한 일수"),
+                    fieldWithPath("intake").description("섭취방법"),
+                    fieldWithPath("mainFunctional").description("주된기능성"),
+                    fieldWithPath("precautions").description("섭취시 주의사항"),
+                    fieldWithPath("storageWay").description("보관방법"),
                     fieldWithPath("categoryId").description("영양제 카테고리 ID")
                 ),
                 getResponseFields())

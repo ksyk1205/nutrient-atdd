@@ -4,7 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
-import com.example.nutrient.acceptance.suplement.SupplementAcceptanceTest.영양제_생성_요청;
+import com.example.nutrient.acceptance.suplement.SupplementAcceptanceTest.SupplementCreateRequest;
 import com.example.nutrient.acceptance.suplement.SupplementAcceptanceTest.영양제_수정_요청;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -26,17 +26,17 @@ public class SupplementSteps {
     }
 
     @Given("카테고리 생성되어 있음")
-    public static String 카테고리_생성되어_있음(String name) {
+    public static UUID 카테고리_생성되어_있음(String name) {
         return 카테고리_생성_요청();
     }
 
-    private static String 카테고리_생성_요청() {
-        return UUID.randomUUID().toString();
+    private static UUID 카테고리_생성_요청() {
+        return UUID.randomUUID();
     }
 
     @When("영양제 생성 요청")
-    public static ExtractableResponse<Response> 영양제_생성_요청(영양제_생성_요청 supplement) {
-        Map<String, Object> createParams = createSupplementCreateParams(supplement);
+    public static ExtractableResponse<Response> 영양제_생성_요청(SupplementCreateRequest supplementCreateRequest) {
+        Map<String, Object> createParams = createSupplementCreateParams(supplementCreateRequest);
         return RestAssured.given().log().all()
             .body(createParams)
             .contentType(APPLICATION_JSON_VALUE)
@@ -44,14 +44,17 @@ public class SupplementSteps {
             .when().post(ENDPOINT)
             .then().log().all().extract();
     }
-
-    private static Map<String, Object> createSupplementCreateParams(영양제_생성_요청 supplement) {
+    private static Map<String, Object> createSupplementCreateParams(SupplementCreateRequest supplementCreateRequest) {
         Map<String, Object> params = new HashMap<>();
-        params.put("name", supplement.getName());
-        params.put("content", supplement.getContent());
-        params.put("intake", supplement.getIntake());
-        params.put("precautions", supplement.getPrecautions());
-        params.put("categoryId", supplement.getCategoryId());
+        params.put("name", supplementCreateRequest.getName());
+        params.put("serialNumber", supplementCreateRequest.getSerialNumber());
+        params.put("permitDate", supplementCreateRequest.getPermitDate());
+        params.put("expirationDate", supplementCreateRequest.getExpirationDate());
+        params.put("intake", supplementCreateRequest.getIntake());
+        params.put("mainFunctional", supplementCreateRequest.getMainFunctional());
+        params.put("precautions", supplementCreateRequest.getPrecautions());
+        params.put("storageWay", supplementCreateRequest.getStorageWay());
+        params.put("categoryId", supplementCreateRequest.getCategoryId());
         return params;
     }
 
