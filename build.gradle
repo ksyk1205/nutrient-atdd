@@ -35,9 +35,13 @@ dependencies {
     testImplementation 'io.cucumber:cucumber-junit:7.0.0'
 
     // test
+    testImplementation 'io.rest-assured:rest-assured:3.3.0'
     testImplementation('org.springframework.boot:spring-boot-starter-test') {
         exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
     }
+    //테스트에서 lombok 사용
+    testCompileOnly 'org.projectlombok:lombok'
+    testAnnotationProcessor 'org.projectlombok:lombok'
 
     annotationProcessor 'org.projectlombok:lombok'
     compileOnly 'org.projectlombok:lombok'
@@ -57,7 +61,6 @@ task testDocument(type: Test) {
     useJUnitPlatform()
     filter {
         includeTestsMatching "*.documentation.*"
-        includeTestsMatching "*.study.documentation.*"
     }
 }
 
@@ -89,7 +92,7 @@ task cucumber() {
         javaexec {
             main = "io.cucumber.core.cli.Main"
             classpath = configurations.cucumberRuntime + sourceSets.main.output + sourceSets.test.output
-            args = ['--plugin', 'pretty', '--glue', 'com.example.nutrient.study.acceptance', 'src/test/resources/feature']
+            args = ['--plugin', 'pretty', '--glue', 'com.example.nutrient.acceptance', 'src/test/resources/feature']
         }
     }
 }
