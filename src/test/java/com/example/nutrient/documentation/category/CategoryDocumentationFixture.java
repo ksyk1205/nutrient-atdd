@@ -24,7 +24,7 @@ public class CategoryDocumentationFixture {
 
 
         RESPONSE = new CategoryCreateResponse(
-                UUID.randomUUID().toString(),
+                UUID.randomUUID(),
                 "비타민"
                 ,1
         );

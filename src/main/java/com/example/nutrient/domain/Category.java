@@ -27,6 +27,9 @@ public class Category {
     @Embedded
     private CategoryTitle title;
 
+    @Embedded
+    private CategoryContent content;
+
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "parent_id",
             columnDefinition = "varbinary(16)",

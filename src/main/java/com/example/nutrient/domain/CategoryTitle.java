@@ -2,6 +2,7 @@ package com.example.nutrient.domain;
 
 import com.example.nutrient.domain.exception.CategoryErrorCode;
 import com.example.nutrient.domain.exception.CategoryException;
+import lombok.Getter;
 import org.apache.logging.log4j.util.Strings;
 
 import javax.persistence.Embeddable;
@@ -11,6 +12,7 @@ import java.util.Objects;
 import static com.example.nutrient.domain.exception.CategoryErrorCode.CATEGORY_NAME_MUST_NOT_BE_EMPTY;
 
 @Embeddable
+@Getter
 public class CategoryTitle {
     private final String name;
 
