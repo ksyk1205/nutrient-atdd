@@ -13,7 +13,6 @@ public class CategoryAcceptanceTest extends AcceptanceTest {
     @DisplayName("카테고리를 관리한다.")
     @Test
     void manage(){
-        ExtractableResponse<Response> createResponse =
-                카테고리_생성_요청("비타민");
+        ExtractableResponse<Response> createResponse = 카테고리_생성_요청("비타민");
     }
 }
