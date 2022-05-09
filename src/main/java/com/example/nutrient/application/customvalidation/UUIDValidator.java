@@ -19,13 +19,13 @@ public class UUIDValidator implements ConstraintValidator<UUIDValid, UUID> {
     public boolean isValid(UUID value, ConstraintValidatorContext context) {
         if(Strings.isEmpty(value.toString())){
             return false;
-        }else if(isUUIDSize(value.toString())){
+        }else if(isUUID(value.toString())){
             return true;
         }
         return true;
     }
 
-    private boolean isUUIDSize(String uuid) {
-        return uuid.length() == UUID_SIZE;
+    private boolean isUUID(String uuid) {
+        return uuid.matches("/^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i");
     }
 }

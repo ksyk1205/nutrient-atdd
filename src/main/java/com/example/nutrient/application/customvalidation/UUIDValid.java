@@ -11,7 +11,7 @@ import javax.validation.Payload;
 
 @Documented
 @Constraint(validatedBy = UUIDValidator.class)
-@Target({ElementType.METHOD, ElementType.FIELD})
+@Target({ElementType.FIELD})
 @Retention(RUNTIME)
 public @interface UUIDValid {
     String message() default "UUID 형식이 올바르지 않습니다.";
