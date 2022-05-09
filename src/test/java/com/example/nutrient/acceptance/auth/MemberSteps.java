@@ -10,8 +10,7 @@ import io.restassured.response.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -23,12 +22,12 @@ public class MemberSteps {
 
     @Given("회원 생성되어있음")
     public static void 회원_생성되어있음() {
-        회원_생성_요청(USER_EMAIL, PASSWORD, AGE, Role.USER);
+        회원_생성_요청(USER_EMAIL, PASSWORD, AGE, List.of(Role.USER));
     }
 
     @Given("관리자 계정 생성되어있음")
     public static void 관리자_계정_생성되어있음() {
-        회원_생성_요청(ADMIN_EMAIL, PASSWORD, AGE, Role.ADMIN);
+        회원_생성_요청(ADMIN_EMAIL, PASSWORD, AGE, List.of(Role.ADMIN));
     }
 
     @When("회원 생성 요청")
@@ -43,8 +42,8 @@ public class MemberSteps {
                 .then().log().all().extract();
     }
 
-    public static ExtractableResponse<Response> 회원_생성_요청(String email, String password, Integer age, Role role) {
-        Map<String, String> params = createParams(email, password, age);
+    public static ExtractableResponse<Response> 회원_생성_요청(String email, String password, Integer age, List<Role> roles) {
+        Map<String, Object> params = createParams(email, password, age, roles);
 
         return RestAssured
                 .given().log().all()
@@ -125,6 +124,15 @@ public class MemberSteps {
         params.put("email", email);
         params.put("password", password);
         params.put("age", age + "");
+        return params;
+    }
+
+    private static Map<String, Object> createParams(String email, String password, Integer age, List<Role> roles) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("email", email);
+        params.put("password", password);
+        params.put("age", age + "");
+        params.put("roles", roles);
         return params;
     }
 }

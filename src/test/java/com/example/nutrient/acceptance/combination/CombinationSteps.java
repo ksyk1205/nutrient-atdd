@@ -5,9 +5,9 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import io.restassured.RestAssured;
+import io.restassured.http.ContentType;
 import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;
-import org.springframework.http.MediaType;
 
 import java.util.HashMap;
 import java.util.List;
@@ -33,12 +33,12 @@ public class CombinationSteps {
     }
 
     @When("영양제 조합 생성 요청")
-    public static ExtractableResponse<Response> 영양제_조합_생성_요청(String title, String content, List<String> combinationLineItemIds, String healthConditionId) {
+    public static ExtractableResponse<Response> 영양제_조합_생성_요청(String accessToken, String title, String content, List<String> combinationLineItemIds, String healthConditionId) {
         Map<String, Object> createParams = createCombinationCreateParams(title, content, combinationLineItemIds, Gender.ALL, healthConditionId);
-
         return RestAssured.given().log().all()
+                .auth().oauth2(accessToken)
+                .contentType(ContentType.JSON)
                 .body(createParams)
-                .accept(MediaType.APPLICATION_JSON_VALUE)
                 .when().post(ENDPOINT)
                 .then().log().all().extract();
     }
