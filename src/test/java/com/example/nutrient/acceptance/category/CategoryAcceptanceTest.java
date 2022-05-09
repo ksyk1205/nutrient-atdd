@@ -6,7 +6,7 @@ import io.restassured.response.Response;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.DisplayName;
 
-import static com.example.nutrient.acceptance.category.categorySteps.카테고리_생성_요청;
+import static com.example.nutrient.acceptance.category.CategorySteps.카테고리_생성_요청;
 
 public class CategoryAcceptanceTest extends AcceptanceTest {
 
@@ -14,6 +14,6 @@ public class CategoryAcceptanceTest extends AcceptanceTest {
     @Test
     void manage(){
         ExtractableResponse<Response> createResponse =
-                카테고리_생성_요청("멀티비타민", null);
+                카테고리_생성_요청("비타민");
     }
 }
