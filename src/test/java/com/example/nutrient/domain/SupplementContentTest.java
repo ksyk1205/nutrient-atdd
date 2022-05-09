@@ -4,6 +4,8 @@ import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.*;
 
+import com.example.nutrient.domain.exception.SupplementErrorCode;
+import com.example.nutrient.domain.exception.SupplementException;
 import java.time.LocalDate;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -41,7 +43,7 @@ class SupplementContentTest {
         assertThatThrownBy(
             () -> new SupplementContent(serialNumber, permitDate, expirationDate, intake,
                 mainFunctional, precautions, storageWay))
-            .isInstanceOf(IllegalArgumentException.class);
+            .isInstanceOf(SupplementException.class);
     }
 
 
@@ -56,7 +58,7 @@ class SupplementContentTest {
                 "①면역력 증진②피로개선③혈소판 응집 억제를 통한 혈액흐름에 도움④기억력 개선⑤항산화에 도움을 줄 수 있음",
                 "[홍삼제품]의약품(당뇨치료제, 혈액항응고제) 복용 시 섭취에 주의 2) 특이체질등 알레르기 체질의 경우 제품성분을 확인 후 섭취하시기 바랍니다. 3) 15세 이하의 어린이는 상기 섭취량의 절반 정도를 섭취하시요. 4) 제품 개봉 또는 섭취시에 포장재로 인한 상처를 입을수 있으니주의 하십시오.",
                 "직사광선을 피해 건조하고 서늘한 곳에서 보관한다."))
-            .isInstanceOf(IllegalArgumentException.class);
+            .isInstanceOf(SupplementException.class);
     }
     @Test
     @DisplayName("허용일자는 현재일 보다 같을 경우 등록되어야 한다.")

@@ -1,6 +1,15 @@
 package com.example.nutrient.domain;
 
+import static com.example.nutrient.domain.exception.SupplementErrorCode.EXPIRATION_DATE_CANNOT_BE_EMPTY;
+import static com.example.nutrient.domain.exception.SupplementErrorCode.INTAKE_CANNOT_BE_EMPTY;
+import static com.example.nutrient.domain.exception.SupplementErrorCode.MAIN_FUNCTIONAL_CANNOT_BE_EMPTY;
+import static com.example.nutrient.domain.exception.SupplementErrorCode.PERMIT_DATE_CANNOT_BE_EMPTY;
+import static com.example.nutrient.domain.exception.SupplementErrorCode.PERMIT_DATE_NOT_AFTER_NOW;
+import static com.example.nutrient.domain.exception.SupplementErrorCode.PRECAUTIONS_CANNOT_BE_EMPTY;
+import static com.example.nutrient.domain.exception.SupplementErrorCode.SERIAL_NUMBER_CANNOT_BE_EMPTY;
+
 import antlr.StringUtils;
+import com.example.nutrient.domain.exception.SupplementException;
 import java.time.LocalDate;
 import java.util.Objects;
 import javax.persistence.Embeddable;
@@ -10,15 +19,6 @@ import org.apache.logging.log4j.util.Strings;
 @Embeddable
 @Getter
 public class SupplementContent {
-
-    private static final String SERIAL_NUMBER_CANNOT_BE_EMPTY = "품목제조번호는 비어있으면 안됩니다.";
-    private static final String PERMIT_DATE_CANNOT_BE_NULL = "허가일자는 NULL 일 수 없습니다.";
-    private static final String PERMIT_DATE_CANNOT_OVER_NOW = "허가일자는 오늘 날보다 이후 일 수 없습니다.";
-    private static final String EXPIRATION_DATE_CANNOT_BE_EMPTY = "유통기한 일수는 비어있으면 안됩니다.";
-    private static final String INTAKE_CANNOT_BE_EMPTY = "섭취 방법은 비어있으면 안됩니다.";
-    private static final String MAIN_FUNCTIONAL_CANNOT_BE_EMPTY = "주된 기능성은 비어있으면 안됩니다.";
-    private static final String PRECAUTIONS_CANNOT_BE_EMPTY = "섭취시주의사항은 비어있으면 안됩니다.";
-
 
     private final String serialNumber;
 
@@ -45,7 +45,7 @@ public class SupplementContent {
 
     public SupplementContent(String serialNumber, LocalDate permitDate, String expirationDate,
         String intake, String mainFunctional, String precautions, String storageWay) {
-        validation(serialNumber, permitDate, expirationDate, intake, mainFunctional, precautions);
+        validate(serialNumber, permitDate, expirationDate, intake, mainFunctional, precautions);
 
         this.serialNumber = serialNumber;
         this.permitDate = permitDate;
@@ -56,7 +56,7 @@ public class SupplementContent {
         this.storageWay = storageWay;
     }
 
-    private void validation(String serialNumber, LocalDate permitDate, String expirationDate,
+    private void validate(String serialNumber, LocalDate permitDate, String expirationDate,
         String intake, String mainFunctional, String precautions) {
         validateSerialNumber(serialNumber);
         validatePermitDate(permitDate);
@@ -68,16 +68,16 @@ public class SupplementContent {
 
     private void validateSerialNumber(String serialNumber) {
         if (Strings.isEmpty(serialNumber)) {
-            throw new IllegalArgumentException(SERIAL_NUMBER_CANNOT_BE_EMPTY);
+            throw new SupplementException(SERIAL_NUMBER_CANNOT_BE_EMPTY);
         }
     }
 
     private void validatePermitDate(LocalDate permitDate) {
         if (permitDate == null) {
-            throw new IllegalArgumentException(PERMIT_DATE_CANNOT_BE_NULL);
+            throw new SupplementException(PERMIT_DATE_CANNOT_BE_EMPTY);
         }
         if (isAfterPermitDate(permitDate)) {
-            throw new IllegalArgumentException(PERMIT_DATE_CANNOT_OVER_NOW);
+            throw new SupplementException(PERMIT_DATE_NOT_AFTER_NOW);
         }
 
     }
@@ -88,25 +88,25 @@ public class SupplementContent {
 
     private void validateExpirationDate(String expirationDate) {
         if (Strings.isEmpty(expirationDate)) {
-            throw new IllegalArgumentException(EXPIRATION_DATE_CANNOT_BE_EMPTY);
+            throw new SupplementException(EXPIRATION_DATE_CANNOT_BE_EMPTY);
         }
     }
 
     private void validateIntake(String intake) {
         if (Strings.isEmpty(intake)) {
-            throw new IllegalArgumentException(INTAKE_CANNOT_BE_EMPTY);
+            throw new SupplementException(INTAKE_CANNOT_BE_EMPTY);
         }
     }
 
     private void validateMainFunctional(String mainFunctional) {
         if (Strings.isEmpty(mainFunctional)) {
-            throw new IllegalArgumentException(MAIN_FUNCTIONAL_CANNOT_BE_EMPTY);
+            throw new SupplementException(MAIN_FUNCTIONAL_CANNOT_BE_EMPTY);
         }
     }
 
     private void validatePrecautions(String precautions) {
         if (Strings.isEmpty(precautions)) {
-            throw new IllegalArgumentException(PRECAUTIONS_CANNOT_BE_EMPTY);
+            throw new SupplementException(PRECAUTIONS_CANNOT_BE_EMPTY);
         }
     }
 
