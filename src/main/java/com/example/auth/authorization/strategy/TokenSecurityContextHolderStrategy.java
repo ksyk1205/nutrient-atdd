@@ -30,10 +30,10 @@ public class TokenSecurityContextHolderStrategy extends SecurityContextHolderStr
     private SecurityContext extractSecurityContext(String credentials) {
         try {
             String payload = jwtTokenProvider.getPayload(credentials);
-            TypeReference<Map<String, String>> typeRef = new TypeReference<Map<String, String>>() {
+            TypeReference<Map<String, Object>> typeRef = new TypeReference<Map<String, Object>>() {
             };
 
-            Map<String, String> principal = new ObjectMapper().readValue(payload, typeRef);
+            Map<String, Object> principal = new ObjectMapper().readValue(payload, typeRef);
             return new SecurityContext(new Authentication(principal));
         } catch (Exception e) {
             return null;

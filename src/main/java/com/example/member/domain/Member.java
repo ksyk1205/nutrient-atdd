@@ -2,10 +2,9 @@ package com.example.member.domain;
 
 import lombok.Getter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Table(name = "members")
@@ -18,6 +17,15 @@ public class Member {
     private String email;
     private String password;
     private Integer age;
+
+    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
+    @JoinColumn(
+            name = "member_id",
+            nullable = false,
+            columnDefinition = "varbinary(16)",
+            foreignKey = @ForeignKey(name = "fk_member_role_to_member")
+    )
+    private List<MemberRole> roles = new ArrayList<>();
 
     protected Member() {
     }
@@ -37,5 +45,10 @@ public class Member {
         this.email = member.email;
         this.password = member.password;
         this.age = member.age;
+        this.roles = member.roles;
+    }
+
+    public void addRole(MemberRole memberRole) {
+        this.roles.add(memberRole);
     }
 }
