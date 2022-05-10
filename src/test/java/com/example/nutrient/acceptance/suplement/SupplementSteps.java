@@ -2,10 +2,11 @@ package com.example.nutrient.acceptance.suplement;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.http.HttpStatus.CREATED;
+import static org.springframework.http.HttpStatus.OK;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 import com.example.nutrient.acceptance.suplement.SupplementAcceptanceTest.SupplementCreateRequest;
-import com.example.nutrient.acceptance.suplement.SupplementAcceptanceTest.영양제_수정_요청;
+import com.example.nutrient.acceptance.suplement.SupplementAcceptanceTest.SupplementUpdateRequest;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -64,8 +65,8 @@ public class SupplementSteps {
     }
 
     @When("영양제 수정 요청")
-    public static ExtractableResponse<Response> 영양제_수정_요청(영양제_수정_요청 supplement) {
-        Map<String, Object> updateParams = createSupplementUpdateParams(supplement);
+    public static ExtractableResponse<Response> 영양제_수정_요청(SupplementUpdateRequest supplementUpdateRequest) {
+        Map<String, Object> updateParams = createSupplementUpdateParams(supplementUpdateRequest);
         return RestAssured.given().log().all()
             .body(updateParams)
             .contentType(APPLICATION_JSON_VALUE)
@@ -74,21 +75,24 @@ public class SupplementSteps {
             .then().log().all().extract();
     }
 
-    private static Map<String, Object> createSupplementUpdateParams(영양제_수정_요청 supplement) {
+    private static Map<String, Object> createSupplementUpdateParams(SupplementUpdateRequest supplementUpdateRequest) {
         Map<String, Object> params = new HashMap<>();
-        params.put("id", supplement.getId());
-        params.put("name", supplement.getName());
-        params.put("content", supplement.getContent());
-        params.put("intake", supplement.getIntake());
-        params.put("precautions", supplement.getPrecautions());
-        params.put("categoryId", supplement.getCategoryId());
+        params.put("id", supplementUpdateRequest.getId());
+        params.put("name", supplementUpdateRequest.getName());
+        params.put("serialNumber", supplementUpdateRequest.getSerialNumber());
+        params.put("permitDate", supplementUpdateRequest.getPermitDate());
+        params.put("expirationDate", supplementUpdateRequest.getExpirationDate());
+        params.put("intake", supplementUpdateRequest.getIntake());
+        params.put("mainFunctional", supplementUpdateRequest.getMainFunctional());
+        params.put("precautions", supplementUpdateRequest.getPrecautions());
+        params.put("storageWay", supplementUpdateRequest.getStorageWay());
+        params.put("categoryId", supplementUpdateRequest.getCategory().getId());
         return params;
     }
 
     @Then("영양제 수정됨")
-    public void 영양제_수정됨() {
-        // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
+    public static void 영양제_수정됨(int statusCode) {
+        assertThat(statusCode).isEqualTo(OK.value());
     }
 
     @When("영양제 삭제 요청")

@@ -7,6 +7,7 @@ import com.example.nutrient.domain.SupplementContent;
 import com.example.nutrient.domain.SupplementTitle;
 import com.example.nutrient.domain.repository.SupplementRepository;
 import com.example.nutrient.ui.SupplementController;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +20,7 @@ public class SupplementService {
     public SupplementCreateResponse create(SupplementCreateRequest request) {
         Supplement saveSupplement = supplementRepository.save(
             Supplement.builder()
+                .id(UUID.randomUUID())
                 .title(new SupplementTitle(request.getName()))
                 .content(new SupplementContent(request.getSerialNumber(), request.getPermitDate(),
                     request.getExpirationDate(), request.getIntake(), request.getMainFunctional(),
