@@ -48,7 +48,7 @@ class CombinationDocumentation extends Documentation {
                                 fieldWithPath("content").description("조합 내용"),
                                 fieldWithPath("combinationLineItemIds").description("조합 품목 ID 목록"),
                                 fieldWithPath("recommendedGender").description("추천 성별(ALL: 모두, MALE: 남성, FEMALE: 여성)"),
-                                fieldWithPath("healthTagId").description("건강 상태 ID")
+                                fieldWithPath("healthStatusId").description("건강 상태 ID")
                         ),
                         getResponseFields())
                 );

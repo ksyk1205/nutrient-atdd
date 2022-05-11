@@ -27,14 +27,14 @@ public class CombinationSteps {
         return UUID.randomUUID().toString();
     }
 
-    @Given("건강 상태 태그 생성되어있음")
-    public static String 건강_상태_태그_생성되어있음(String name) {
+    @Given("건강 상태 생성되어있음")
+    public static String 건강_상태_생성되어있음(String name) {
         return UUID.randomUUID().toString();
     }
 
     @When("영양제 조합 생성 요청")
-    public static ExtractableResponse<Response> 영양제_조합_생성_요청(String accessToken, String title, String content, List<String> combinationLineItemIds, String healthTagId) {
-        Map<String, Object> createParams = createCombinationCreateParams(title, content, combinationLineItemIds, Gender.ALL, healthTagId);
+    public static ExtractableResponse<Response> 영양제_조합_생성_요청(String accessToken, String title, String content, List<String> combinationLineItemIds, String healthStatusId) {
+        Map<String, Object> createParams = createCombinationCreateParams(title, content, combinationLineItemIds, Gender.ALL, healthStatusId);
         return RestAssured.given().log().all()
                 .auth().oauth2(accessToken)
                 .contentType(ContentType.JSON)
@@ -44,13 +44,13 @@ public class CombinationSteps {
     }
 
     private static Map<String, Object> createCombinationCreateParams(
-            String title, String content, List<String> combinationLineItemIds, Gender recommendedGender, String healthTagId) {
+            String title, String content, List<String> combinationLineItemIds, Gender recommendedGender, String healthStatusId) {
         Map<String, Object> params = new HashMap<>();
         params.put("title", title);
         params.put("content", content);
         params.put("combinationLineItemIds", combinationLineItemIds);
         params.put("recommendedGender", recommendedGender);
-        params.put("healthTagId", healthTagId);
+        params.put("healthStatusId", healthStatusId);
         return params;
     }
 

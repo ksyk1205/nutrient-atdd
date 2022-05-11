@@ -14,7 +14,7 @@ public class CombinationCreateResponse {
     private String content;
     private List<SupplementCreateResponse> supplementResponses;
     private Gender recommendedGender;
-    private HealthTagResponse healthTagResponse;
+    private HealthStatusResponse healthStatusResponse;
 
     public CombinationCreateResponse(
             UUID id,
@@ -22,12 +22,12 @@ public class CombinationCreateResponse {
             String content,
             List<SupplementCreateResponse> supplementResponses,
             Gender recommendedGender,
-            HealthTagResponse healthTagResponse) {
+            HealthStatusResponse healthStatusResponse) {
         this.id = id;
         this.title = title;
         this.content = content;
         this.supplementResponses = supplementResponses;
         this.recommendedGender = recommendedGender;
-        this.healthTagResponse = healthTagResponse;
+        this.healthStatusResponse = healthStatusResponse;
     }
 }

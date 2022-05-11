@@ -6,6 +6,8 @@ import lombok.Getter;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Embeddable
 @Getter
@@ -31,7 +33,7 @@ public class CombinationLineItems {
     }
 
     private void validate(List<CombinationLineItem> combinationLineItems) {
-        if (combinationLineItems.isEmpty()) {
+        if (Objects.isNull(combinationLineItems) || combinationLineItems.isEmpty()) {
             throw new IllegalArgumentException(COMBINATION_LINE_ITEMS_MUST_NOT_BE_EMPTY);
         }
         if (isExceedMaxSize(combinationLineItems.size())) {
@@ -47,7 +49,8 @@ public class CombinationLineItems {
     }
 
     private boolean isDuplicated(List<CombinationLineItem> combinationLineItems) {
-        // TODO: 영양제 중복 체크
-        return true;
+        List<Supplement> supplements = combinationLineItems
+                .stream().map(CombinationLineItem::getSupplement).collect(Collectors.toList());
+        return new Supplements(supplements).isDuplicated();
     }
 }
