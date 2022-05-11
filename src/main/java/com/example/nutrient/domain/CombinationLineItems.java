@@ -32,6 +32,13 @@ public class CombinationLineItems {
         this.combinationLineItems = combinationLineItems;
     }
 
+    public CombinationLineItems(Supplements supplements) {
+        List<CombinationLineItem> combinationLineItems =
+                supplements.getSupplements().stream().map(CombinationLineItem::new).collect(Collectors.toList());
+        validate(combinationLineItems);
+        this.combinationLineItems = combinationLineItems;
+    }
+
     private void validate(List<CombinationLineItem> combinationLineItems) {
         if (Objects.isNull(combinationLineItems) || combinationLineItems.isEmpty()) {
             throw new IllegalArgumentException(COMBINATION_LINE_ITEMS_MUST_NOT_BE_EMPTY);

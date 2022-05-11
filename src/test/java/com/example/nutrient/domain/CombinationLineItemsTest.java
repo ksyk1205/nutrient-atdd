@@ -23,6 +23,13 @@ class CombinationLineItemsTest {
                 .doesNotThrowAnyException();
     }
 
+    @DisplayName("조합 품목 목록을 생성한다")
+    @Test
+    void createWithSupplements() {
+        assertThatCode(() -> new CombinationLineItems(SUPPLEMENTS))
+                .doesNotThrowAnyException();
+    }
+
     @DisplayName("조함 품목 목록은 비어있지 않아야 한다")
     @ParameterizedTest
     @NullAndEmptySource

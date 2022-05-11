@@ -1,7 +1,7 @@
 package com.example.nutrient.domain;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 
 import java.util.Arrays;
 import java.util.List;
@@ -35,7 +35,7 @@ public class SupplementsFixture {
     }
 
     @AllArgsConstructor
-    @Data
+    @Getter
     static class FakeSupplement extends Supplement {
         private UUID id;
         private String name;
