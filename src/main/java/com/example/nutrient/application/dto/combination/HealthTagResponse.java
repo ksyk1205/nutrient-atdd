@@ -5,11 +5,11 @@ import lombok.Getter;
 import java.util.UUID;
 
 @Getter
-public class HealthConditionResponse {
+public class HealthTagResponse {
     private UUID id;
     private String name;
 
-    public HealthConditionResponse(UUID id, String name) {
+    public HealthTagResponse(UUID id, String name) {
         this.id = id;
         this.name = name;
     }

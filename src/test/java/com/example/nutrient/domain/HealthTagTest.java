@@ -6,13 +6,12 @@ import org.junit.jupiter.api.Test;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThatCode;
-import static org.junit.jupiter.api.Assertions.*;
 
-class HealthConditionTest {
+class HealthTagTest {
     @DisplayName("건강 상태를 생성한다")
     @Test
     void create() {
-        assertThatCode(() -> new HealthCondition(UUID.randomUUID(), new HealthConditionName("무기력증")))
+        assertThatCode(() -> new HealthTag(UUID.randomUUID(), new HealthTagName("무기력증")))
                 .doesNotThrowAnyException();
     }
 }

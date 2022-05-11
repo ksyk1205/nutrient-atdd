@@ -21,11 +21,11 @@ public class Combination {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(
-            name = "health_condition_id",
+            name = "health_tag_id",
             columnDefinition = "varbinary(16)",
-            foreignKey = @ForeignKey(name = "fk_combination_to_health_condition")
+            foreignKey = @ForeignKey(name = "fk_combination_to_health_tag")
     )
-    private HealthCondition healthCondition;
+    private HealthTag healthTag;
 
     @Embedded
     private CombinationLineItems combinationLineItems;
@@ -46,8 +46,8 @@ public class Combination {
         return recommendedGender;
     }
 
-    public HealthCondition getHealthCondition() {
-        return healthCondition;
+    public HealthTag getHealthTag() {
+        return healthTag;
     }
 
     public List<CombinationLineItem> getCombinationLineItems() {

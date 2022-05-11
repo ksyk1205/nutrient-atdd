@@ -10,18 +10,18 @@ import java.util.UUID;
 
 @Entity
 @Getter
-public class HealthCondition {
+public class HealthTag {
     @Column(name = "id", columnDefinition = "varbinary(16)")
     @Id
     private UUID id;
 
     @Embedded
-    private HealthConditionName name;
+    private HealthTagName name;
 
-    protected HealthCondition() {
+    protected HealthTag() {
     }
 
-    public HealthCondition(UUID id, HealthConditionName name) {
+    public HealthTag(UUID id, HealthTagName name) {
         this.id = id;
         this.name = name;
     }

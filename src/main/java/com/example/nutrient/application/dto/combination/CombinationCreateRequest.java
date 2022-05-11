@@ -12,13 +12,13 @@ public class CombinationCreateRequest {
     private String content;
     private List<UUID> combinationLineItemIds;
     private Gender recommendedGender;
-    private UUID healthConditionId;
+    private UUID healthTagId;
 
-    public CombinationCreateRequest(String title, String content, List<UUID> combinationLineItemIds, Gender recommendedGender, UUID healthConditionId) {
+    public CombinationCreateRequest(String title, String content, List<UUID> combinationLineItemIds, Gender recommendedGender, UUID healthTagId) {
         this.title = title;
         this.content = content;
         this.combinationLineItemIds = combinationLineItemIds;
         this.recommendedGender = recommendedGender;
-        this.healthConditionId = healthConditionId;
+        this.healthTagId = healthTagId;
     }
 }
