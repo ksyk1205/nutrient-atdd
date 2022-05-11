@@ -6,22 +6,22 @@ import javax.persistence.Embeddable;
 import java.util.Objects;
 
 @Embeddable
-public class HealthTagName {
-    private static final String HEALTH_TAG_NAME_MUST_NOT_BE_EMPTY = "건강 상태 이름은 비어있지 않아야 합니다.";
+public class HealthStatusName {
+    private static final String HEALTH_STATUS_NAME_MUST_NOT_BE_EMPTY = "건강 상태 이름은 비어있지 않아야 합니다.";
     private final String name;
 
-    protected HealthTagName() {
+    protected HealthStatusName() {
         this.name = null;
     }
 
-    protected HealthTagName(String name) {
+    protected HealthStatusName(String name) {
         validate(name);
         this.name = name;
     }
 
     private void validate(String name) {
         if (Strings.isEmpty(name)) {
-            throw new IllegalArgumentException(HEALTH_TAG_NAME_MUST_NOT_BE_EMPTY);
+            throw new IllegalArgumentException(HEALTH_STATUS_NAME_MUST_NOT_BE_EMPTY);
         }
     }
 
@@ -29,7 +29,7 @@ public class HealthTagName {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        HealthTagName that = (HealthTagName) o;
+        HealthStatusName that = (HealthStatusName) o;
         return name.equals(that.name);
     }
 
