@@ -86,7 +86,7 @@ public class SupplementSteps {
         params.put("mainFunctional", supplementUpdateRequest.getMainFunctional());
         params.put("precautions", supplementUpdateRequest.getPrecautions());
         params.put("storageWay", supplementUpdateRequest.getStorageWay());
-        params.put("categoryId", supplementUpdateRequest.getCategory().getId());
+        params.put("categoryId", supplementUpdateRequest.getCategoryId());
         return params;
     }
 

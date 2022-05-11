@@ -1,5 +1,6 @@
 package com.example.nutrient.domain;
 
+import static javax.persistence.FetchType.LAZY;
 import static lombok.AccessLevel.PRIVATE;
 import static lombok.AccessLevel.PROTECTED;
 
@@ -9,7 +10,12 @@ import java.util.UUID;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.ForeignKey;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotEmpty;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -35,11 +41,20 @@ public class Supplement extends BaseTimeEntity implements Persistable {
     @Embedded
     private SupplementContent content;
 
-    //private Category category;
+    @ManyToOne(fetch = LAZY)
+    @JoinColumn(
+        name = "category_id",
+        columnDefinition = "varbinary(16)",
+        foreignKey = @ForeignKey(foreignKeyDefinition = "fk_category_id_to_supplement")
+    )
+    private Category category;
+
     @Override
     public boolean isNew() {
         return this.getCreatedAt() == null;
     }
+
+
 
 
 }
