@@ -27,8 +27,8 @@ public class CombinationSteps {
         return UUID.randomUUID().toString();
     }
 
-    @Given("건강 상태 생성되어있음")
-    public static String 건강_상태_생성되어있음(String name) {
+    @Given("건강 상태 태그 생성되어있음")
+    public static String 건강_상태_태그_생성되어있음(String name) {
         return UUID.randomUUID().toString();
     }
 

@@ -51,7 +51,7 @@ class CombinationAcceptanceTest extends AcceptanceTest {
 
         영양제_목록 = Arrays.asList(멀티비타민_센트룸, 마그네슘_솔가, 루테인_안국건강, 밀크시슬_나우푸드, 오메가3_종근당);
 
-        무기력 = 건강_상태_생성되어있음("무기력");
+        무기력 = 건강_상태_태그_생성되어있음("무기력");
 
         회원_생성되어있음();
         사용자 = 로그인_되어_있음(USER_EMAIL, PASSWORD);
