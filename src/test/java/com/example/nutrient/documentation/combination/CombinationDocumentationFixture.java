@@ -12,12 +12,12 @@ import java.util.UUID;
 
 public class CombinationDocumentationFixture {
     public static final CombinationCreateRequest CREATE_REQUEST;
-    public static final List<UUID> COMBINATION_LINE_ITEM_IDS;
+    public static final List<UUID> SUPPLEMENT_IDS;
     public static final HealthStatusResponse HEALTH_STATUS_RESPONSE;
     public static final CombinationCreateResponse RESPONSE;
 
     static {
-        COMBINATION_LINE_ITEM_IDS = Arrays.asList(
+        SUPPLEMENT_IDS = Arrays.asList(
                 UUID.randomUUID(),
                 UUID.randomUUID(),
                 UUID.randomUUID(),
@@ -28,7 +28,7 @@ public class CombinationDocumentationFixture {
         CREATE_REQUEST = new CombinationCreateRequest(
                 "무기력증에 추천",
                 "<p>일상이 무기력할 때 추천하는 영양제 조합입니다.<p>",
-                COMBINATION_LINE_ITEM_IDS,
+                SUPPLEMENT_IDS,
                 Gender.MALE,
                 UUID.randomUUID()
         );
