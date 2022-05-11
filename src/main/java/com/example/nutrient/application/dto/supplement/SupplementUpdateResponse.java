@@ -25,7 +25,7 @@ public class SupplementUpdateResponse {
     private String storageWay;
     private CategoryResponse category;
 
-    public static SupplementUpdateResponse create(Supplement supplement) {
+    public static SupplementUpdateResponse update(Supplement supplement) {
         SupplementTitle title = supplement.getTitle();
         SupplementContent content = supplement.getContent();
         return new SupplementUpdateResponse(
@@ -38,7 +38,7 @@ public class SupplementUpdateResponse {
             content.getMainFunctional(),
             content.getPrecautions(),
             content.getStorageWay(),
-            new SupplementUpdateResponse.CategoryResponse(UUID.randomUUID(), "임시 테스트")
+            new SupplementUpdateResponse.CategoryResponse(supplement.getCategory().getId(), supplement.getCategory().getTitle().getName())
         );
     }
 

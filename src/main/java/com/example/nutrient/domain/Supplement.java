@@ -55,7 +55,17 @@ public class Supplement extends BaseTimeEntity implements Persistable {
         return this.getCreatedAt() == null;
     }
 
+    public void updateTitle(SupplementTitle updateTitle) {
+        this.title = updateTitle;
+    }
 
+    public void updateContent(SupplementContent update) {
+        this.content = update;
+    }
 
-
+    public void updateCategory(Category category) {
+        if(this.category.getId() != category.getId()){
+            this.category = category;
+        }
+    }
 }
