@@ -14,7 +14,7 @@ public class CombinationTitle {
         this.title = null;
     }
 
-    protected CombinationTitle(String title) {
+    public CombinationTitle(String title) {
         validate(title);
         this.title = title;
     }

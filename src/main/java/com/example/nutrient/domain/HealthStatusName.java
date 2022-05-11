@@ -14,7 +14,7 @@ public class HealthStatusName {
         this.name = null;
     }
 
-    protected HealthStatusName(String name) {
+    public HealthStatusName(String name) {
         validate(name);
         this.name = name;
     }

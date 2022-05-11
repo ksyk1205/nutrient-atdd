@@ -17,7 +17,7 @@ public class CombinationContent {
         this.content = null;
     }
 
-    protected CombinationContent(String content) {
+    public CombinationContent(String content) {
         validation(content);
         this.content = content;
     }
