@@ -39,11 +39,12 @@ public class SupplementCreateResponse {
             content.getMainFunctional(),
             content.getPrecautions(),
             content.getStorageWay(),
-            new CategoryResponse(UUID.randomUUID(), "임시 테스트")
+            new CategoryResponse(supplement.getCategory().getId(), supplement.getCategory().getTitle().getName())
         );
     }
 
     @Data
+    @NoArgsConstructor
     @AllArgsConstructor
     public static class CategoryResponse {
 

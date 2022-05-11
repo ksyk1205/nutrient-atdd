@@ -31,6 +31,7 @@ import org.springframework.data.domain.Persistable;
 @AllArgsConstructor(access = PRIVATE)
 public class Supplement extends BaseTimeEntity implements Persistable {
 
+
     @Id
     @Column(name = "id", columnDefinition = "varbinary(16)")
     private UUID id;

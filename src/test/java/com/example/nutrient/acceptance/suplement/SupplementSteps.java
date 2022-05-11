@@ -1,5 +1,6 @@
 package com.example.nutrient.acceptance.suplement;
 
+import static com.example.nutrient.acceptance.category.CategorySteps.카테고리_생성_요청;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.HttpStatus.OK;
@@ -28,12 +29,9 @@ public class SupplementSteps {
 
     @Given("카테고리 생성되어 있음")
     public static UUID 카테고리_생성되어_있음(String name) {
-        return 카테고리_생성_요청();
+        return 카테고리_생성_요청(name).body().jsonPath().getUUID("id");
     }
 
-    private static UUID 카테고리_생성_요청() {
-        return UUID.randomUUID();
-    }
 
     @When("영양제 생성 요청")
     public static ExtractableResponse<Response> 영양제_생성_요청(SupplementCreateRequest supplementCreateRequest) {
