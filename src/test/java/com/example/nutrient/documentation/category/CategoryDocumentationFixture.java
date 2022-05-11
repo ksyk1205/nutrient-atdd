@@ -19,16 +19,14 @@ public class CategoryDocumentationFixture {
     static {
 
         CREATE_REQUEST = new CategoryCreateRequest(
-                "멀티비타민"
-                ,null
+                "비타민"
         );
 
 
         RESPONSE = new CategoryCreateResponse(
-                UUID.randomUUID().toString(),
-                "멀티비타민"
-                ,0
-                ,null
+                UUID.randomUUID(),
+                "비타민"
+                ,1
         );
     }
 
@@ -36,8 +34,7 @@ public class CategoryDocumentationFixture {
         return responseFields(
                 fieldWithPath("id").description("카테고리 ID"),
                 fieldWithPath("name").description("카테고리명"),
-                fieldWithPath("depth").description("카테고리 레벨"),
-                fieldWithPath("parentCategory.id").description("상위 카테고리 ID")
+                fieldWithPath("depth").description("카테고리 레벨")
         );
     }
 }

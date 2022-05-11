@@ -23,7 +23,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @WebMvcTest(CategoryRestController.class)
 public class CategoryDocumentation extends Documentation {
-    private final static String ENDPOINT = "/api/category";
+    private final static String ENDPOINT = "/api/categories";
 
     @MockBean
     private CategoryService categoryService;
@@ -42,8 +42,7 @@ public class CategoryDocumentation extends Documentation {
                 .andDo(print())
                 .andDo(document("category-create",
                         requestFields(
-                                fieldWithPath("name").description("카테고리명"),
-                                fieldWithPath("parentId").description("상위 카테고리 ID")
+                                fieldWithPath("name").description("카테고리명")
                         ),
                         getResponseFields())
                 );
