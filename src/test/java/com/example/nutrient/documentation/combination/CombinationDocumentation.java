@@ -14,6 +14,7 @@ import org.springframework.http.MediaType;
 import static com.example.nutrient.documentation.combination.CombinationDocumentationFixture.*;
 import static com.example.nutrient.documentation.combination.CombinationDocumentationFixture.CREATE_REQUEST;
 import static com.example.nutrient.documentation.combination.CombinationDocumentationFixture.RESPONSE;
+import static com.example.nutrient.documentation.combination.CombinationDocumentationSteps.getResponseFields;
 import static org.mockito.BDDMockito.any;
 import static org.mockito.BDDMockito.given;
 

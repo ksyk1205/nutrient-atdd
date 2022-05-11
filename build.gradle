@@ -34,6 +34,9 @@ dependencies {
     testImplementation 'io.cucumber:cucumber-java:7.0.0'
     testImplementation 'io.cucumber:cucumber-junit:7.0.0'
 
+    // jwt
+    implementation 'io.jsonwebtoken:jjwt:0.9.1'
+
     // test
     testImplementation 'io.rest-assured:rest-assured:3.3.0'
     testImplementation('org.springframework.boot:spring-boot-starter-test') {
