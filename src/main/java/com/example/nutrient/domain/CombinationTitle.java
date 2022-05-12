@@ -1,10 +1,12 @@
 package com.example.nutrient.domain;
 
+import lombok.Getter;
 import org.apache.logging.log4j.util.Strings;
 
 import javax.persistence.Embeddable;
 import java.util.Objects;
 
+@Getter
 @Embeddable
 public class CombinationTitle {
     private static final String COMBINATION_TITLE_MUST_NOT_BE_EMPTY = "조합 제목은 비어있지 않아야 합니다.";

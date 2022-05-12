@@ -11,7 +11,7 @@ public class CombinationDocumentationSteps {
                 fieldWithPath("id").description("조합 ID"),
                 fieldWithPath("title").description("조합 제목"),
                 fieldWithPath("content").description("조합 내용"),
-                fieldWithPath("supplementResponses").description("조합 품목 목록"),
+                fieldWithPath("combinationLineItems").description("조합 품목 목록"),
                 fieldWithPath("recommendedGender").description("추천 성별(ALL: 모두, MALE: 남성, FEMALE: 여성)"),
                 fieldWithPath("healthStatusResponse").description("건강 상태"),
                 fieldWithPath("healthStatusResponse.id").description("건강 상태 ID"),

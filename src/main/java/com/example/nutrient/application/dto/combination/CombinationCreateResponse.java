@@ -1,33 +1,34 @@
 package com.example.nutrient.application.dto.combination;
 
-import com.example.nutrient.application.dto.supplement.SupplementCreateResponse;
+import com.example.nutrient.domain.Combination;
+import com.example.nutrient.domain.CombinationLineItem;
 import com.example.nutrient.domain.Gender;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 import java.util.UUID;
 
 @Getter
+@NoArgsConstructor
+@AllArgsConstructor
 public class CombinationCreateResponse {
     private UUID id;
     private String title;
     private String content;
-    private List<SupplementCreateResponse> supplementResponses;
+    private List<CombinationLineItem> combinationLineItems;
     private Gender recommendedGender;
     private HealthStatusResponse healthStatusResponse;
 
-    public CombinationCreateResponse(
-            UUID id,
-            String title,
-            String content,
-            List<SupplementCreateResponse> supplementResponses,
-            Gender recommendedGender,
-            HealthStatusResponse healthStatusResponse) {
-        this.id = id;
-        this.title = title;
-        this.content = content;
-        this.supplementResponses = supplementResponses;
-        this.recommendedGender = recommendedGender;
-        this.healthStatusResponse = healthStatusResponse;
+    public static CombinationCreateResponse of(Combination combination) {
+        return new CombinationCreateResponse(
+                combination.getId(),
+                combination.getTitle(),
+                combination.getContent(),
+                combination.getCombinationLineItems(),
+                combination.getRecommendedGender(),
+                HealthStatusResponse.of(combination.getHealthStatus())
+        );
     }
 }

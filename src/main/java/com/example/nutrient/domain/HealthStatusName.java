@@ -1,10 +1,12 @@
 package com.example.nutrient.domain;
 
+import lombok.Getter;
 import org.apache.logging.log4j.util.Strings;
 
 import javax.persistence.Embeddable;
 import java.util.Objects;
 
+@Getter
 @Embeddable
 public class HealthStatusName {
     private static final String HEALTH_STATUS_NAME_MUST_NOT_BE_EMPTY = "건강 상태 이름은 비어있지 않아야 합니다.";
