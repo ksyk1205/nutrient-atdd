@@ -12,4 +12,6 @@ import javax.validation.constraints.NotEmpty;
 public class CategoryCreateRequest {
     @NotEmpty
     private String name;
+
+    private Integer depth;
 }
