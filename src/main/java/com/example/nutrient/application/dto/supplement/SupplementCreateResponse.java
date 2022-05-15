@@ -26,7 +26,7 @@ public class SupplementCreateResponse {
     private String storageWay;
     private CategoryResponse category;
 
-    public static SupplementCreateResponse create(Supplement supplement) {
+    public static SupplementCreateResponse of(Supplement supplement) {
         SupplementTitle title = supplement.getTitle();
         SupplementContent content = supplement.getContent();
         return new SupplementCreateResponse(

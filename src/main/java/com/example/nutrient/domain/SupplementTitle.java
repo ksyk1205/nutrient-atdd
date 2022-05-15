@@ -31,23 +31,8 @@ public class SupplementTitle {
     }
 
     public SupplementTitle update(String name) {
-        if(!updateCheck(name)){
-            return this;
-        }
         return new SupplementTitle(name);
     }
-
-    private boolean updateCheck(String name) {
-        if(Strings.isEmpty(name)){
-            return false;
-        }
-        SupplementTitle supplementTitle = new SupplementTitle(name);
-        if(this.equals(supplementTitle)){
-            return false;
-        }
-        return true;
-    }
-
 
     @Override
     public boolean equals(Object o) {

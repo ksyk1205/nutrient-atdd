@@ -28,7 +28,7 @@ public class SupplementService {
 
     public SupplementCreateResponse create(SupplementCreateRequest request) {
         Category category = getCategory(request.getCategoryId());
-        Supplement saveSupplement = Supplement.builder()
+        Supplement supplement = Supplement.builder()
             .id(UUID.randomUUID())
             .title(new SupplementTitle(request.getName()))
             .content(new SupplementContent(request.getSerialNumber(), request.getPermitDate(),
@@ -36,8 +36,8 @@ public class SupplementService {
                 request.getPrecautions(), request.getStorageWay()))
             .category(category)
             .build();
-        supplementRepository.save(saveSupplement);
-        return SupplementCreateResponse.create(saveSupplement);
+        Supplement saveSupplement = supplementRepository.save(supplement);
+        return SupplementCreateResponse.of(saveSupplement);
     }
 
     public SupplementUpdateResponse update(SupplementUpdateRequest request) {
@@ -48,7 +48,7 @@ public class SupplementService {
             request.getExpirationDate(), request.getIntake(), request.getMainFunctional(),
             request.getPrecautions(), request.getStorageWay()));
         supplement.updateCategory(category);
-        return SupplementUpdateResponse.update(supplement);
+        return SupplementUpdateResponse.of(supplement);
     }
 
     private Supplement getSupplement(UUID id) {

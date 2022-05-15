@@ -95,12 +95,11 @@ class SupplementContentTest {
             .doesNotThrowAnyException();
     }
 
-    @DisplayName("영양제 수정시에는 비어있을 경우 기존값을 사용한다")
+    @DisplayName("영양제 수정시 null일 경우 기존값을 사용한다")
     @ParameterizedTest
     @CsvSource(value =
         {
-            ":::::",
-            "''::'':'':'':''"
+            ":::::"
         },delimiter = ':'
     )
     public void updateNullCheck(String serialNumber, LocalDate permitDate, String expirationDate,

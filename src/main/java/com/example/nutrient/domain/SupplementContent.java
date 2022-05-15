@@ -137,7 +137,7 @@ public class SupplementContent {
         return true;
     }
     private String updateCheckSerialNumber(String serialNumber) {
-        if(Strings.isEmpty(serialNumber)){
+        if(serialNumber == null){
             return this.serialNumber;
         }
         return serialNumber;
@@ -151,28 +151,28 @@ public class SupplementContent {
     }
 
     private String updateCheckExpirationDate(String expirationDate) {
-        if(Strings.isEmpty(expirationDate)){
+        if(expirationDate== null){
             return this.expirationDate;
         }
         return expirationDate;
     }
 
     private String updateCheckIntake(String intake) {
-        if(Strings.isEmpty(intake)){
+        if(intake == null){
             return this.intake;
         }
         return intake;
     }
 
     private String updateCheckMainFunctional(String mainFunctional) {
-        if(Strings.isEmpty(mainFunctional)){
+        if(mainFunctional == null){
             return this.mainFunctional;
         }
         return mainFunctional;
     }
 
     private String updateCheckPrecautions(String precautions) {
-        if(Strings.isEmpty(precautions)){
+        if(precautions == null){
             return this.precautions;
         }
         return precautions;
