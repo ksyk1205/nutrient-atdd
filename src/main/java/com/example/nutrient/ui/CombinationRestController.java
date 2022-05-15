@@ -1,7 +1,9 @@
 package com.example.nutrient.ui;
 
-import com.example.nutrient.application.dto.combination.CombinationCreateRequest;
+import com.example.auth.authorization.AuthenticationPrincipal;
+import com.example.member.domain.LoginMember;
 import com.example.nutrient.application.CombinationService;
+import com.example.nutrient.application.dto.combination.CombinationCreateRequest;
 import com.example.nutrient.application.dto.combination.CombinationCreateResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +21,9 @@ public class CombinationRestController {
     private final CombinationService combinationService;
 
     @PostMapping
-    public ResponseEntity<CombinationCreateResponse> create(@RequestBody CombinationCreateRequest request) {
+    public ResponseEntity<CombinationCreateResponse> create(
+            @RequestBody CombinationCreateRequest request,
+            @AuthenticationPrincipal LoginMember loginMember) {
         CombinationCreateResponse response = combinationService.create(request);
         return ResponseEntity.created(URI.create("/api/combinations/" + response.getId()))
                 .body(response);
