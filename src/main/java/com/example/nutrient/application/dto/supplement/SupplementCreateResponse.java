@@ -26,7 +26,7 @@ public class SupplementCreateResponse {
     private String storageWay;
     private CategoryResponse category;
 
-    public static SupplementCreateResponse create(Supplement supplement) {
+    public static SupplementCreateResponse of(Supplement supplement) {
         SupplementTitle title = supplement.getTitle();
         SupplementContent content = supplement.getContent();
         return new SupplementCreateResponse(
@@ -39,11 +39,12 @@ public class SupplementCreateResponse {
             content.getMainFunctional(),
             content.getPrecautions(),
             content.getStorageWay(),
-            new CategoryResponse(UUID.randomUUID(), "임시 테스트")
+            new CategoryResponse(supplement.getCategory().getId(), supplement.getCategory().getTitle().getName())
         );
     }
 
     @Data
+    @NoArgsConstructor
     @AllArgsConstructor
     public static class CategoryResponse {
 

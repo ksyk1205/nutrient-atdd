@@ -7,17 +7,12 @@ import static com.example.nutrient.acceptance.suplement.SupplementSteps.영양�
 import static com.example.nutrient.acceptance.suplement.SupplementSteps.카테고리_생성되어_있음;
 
 import com.example.nutrient.acceptance.AcceptanceTest;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;
-import io.restassured.response.ResponseBody;
-import java.time.LocalDate;
 import java.util.UUID;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import net.minidev.json.annotate.JsonIgnore;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -50,7 +45,7 @@ public class SupplementAcceptanceTest extends AcceptanceTest {
                 "직사광선을 피해 건조하고 서늘한 곳에서 보관한다.", 홍삼제품));
         영양제_생성됨(고려홍삼정_PREMIUM.statusCode());
 
-        UUID 고려홍삼정_PREMIUM_ID = 고려홍삼정_PREMIUM.response().body().as(SupplementUpdateRequest.class).id;
+        UUID 고려홍삼정_PREMIUM_ID = 고려홍삼정_PREMIUM.response().jsonPath().getUUID("id");
         ExtractableResponse<Response> 김화란_클로렐라 = 영양제_수정_요청(new SupplementUpdateRequest(
             고려홍삼정_PREMIUM_ID,
             "김화란 클로렐라",
@@ -61,10 +56,7 @@ public class SupplementAcceptanceTest extends AcceptanceTest {
             "[클로렐라 제품]1. 피부건강에 도움 2. 항산화작용",
             "특정 성분에 알레르기 체질이신 분은 섭취 전 원료(성분)를 확인하시기 바랍니다.",
             "직사광선을 피하고 서늘한 곳에 보관 및 유통",
-            new SupplementUpdateRequest.Category(
-                클로렐라,
-                "클로렐라"
-            )
+            클로렐라
         ));
         영양제_수정됨(김화란_클로렐라.statusCode());
 
@@ -97,16 +89,6 @@ public class SupplementAcceptanceTest extends AcceptanceTest {
         private String mainFunctional;
         private String precautions;
         private String storageWay;
-        private Category category;
-
-
-        @Getter
-        @NoArgsConstructor
-        @AllArgsConstructor
-        static class Category{
-            private UUID id;
-            private String name;
-        }
-
+        private UUID categoryId;
     }
 }
