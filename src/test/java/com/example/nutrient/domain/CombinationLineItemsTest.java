@@ -6,6 +6,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
+import org.junit.jupiter.params.provider.NullSource;
 
 import java.util.List;
 
@@ -35,6 +36,14 @@ class CombinationLineItemsTest {
     @NullAndEmptySource
     void isEmpty(List<CombinationLineItem> combinationLineItems) {
         assertThatThrownBy(() -> new CombinationLineItems(combinationLineItems))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @DisplayName("조함 품목 목록은 비어있지 않아야 한다")
+    @ParameterizedTest
+    @NullSource
+    void isEmptySupplements(Supplements supplements) {
+        assertThatThrownBy(() -> new CombinationLineItems(supplements))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 

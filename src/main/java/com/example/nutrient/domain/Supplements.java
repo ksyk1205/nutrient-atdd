@@ -7,7 +7,7 @@ import java.util.Objects;
 
 @Getter
 public class Supplements {
-    private final String SUPPLEMENTS_MUST_NOT_BE_EMPTY = "영양제 목록은 비어있지 않아야 합니다.";
+    public static final String SUPPLEMENTS_MUST_NOT_BE_EMPTY = "영양제 목록은 비어있지 않아야 합니다.";
     private final List<Supplement> supplements;
 
     public Supplements(List<Supplement> supplements) {

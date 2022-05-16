@@ -9,6 +9,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+import static com.example.nutrient.domain.Supplements.SUPPLEMENTS_MUST_NOT_BE_EMPTY;
+
 @Embeddable
 @Getter
 public class CombinationLineItems {
@@ -33,10 +35,18 @@ public class CombinationLineItems {
     }
 
     public CombinationLineItems(Supplements supplements) {
+        validateSupplements(supplements);
+
         List<CombinationLineItem> combinationLineItems =
                 supplements.getSupplements().stream().map(CombinationLineItem::new).collect(Collectors.toList());
         validate(combinationLineItems);
         this.combinationLineItems = combinationLineItems;
+    }
+
+    private void validateSupplements(Supplements supplements) {
+        if (Objects.isNull(supplements)) {
+            throw new IllegalArgumentException(SUPPLEMENTS_MUST_NOT_BE_EMPTY);
+        }
     }
 
     private void validate(List<CombinationLineItem> combinationLineItems) {
