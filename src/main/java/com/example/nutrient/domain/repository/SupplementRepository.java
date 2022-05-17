@@ -10,7 +10,7 @@ public interface SupplementRepository {
 
     Supplement save(Supplement supplement);
 
-    List<Supplement> findAllById(Iterable<UUID> ids);
-
     Optional<Supplement> findById(UUID id);
+
+    List<Supplement> findAllById(Iterable<UUID> ids);
 }
