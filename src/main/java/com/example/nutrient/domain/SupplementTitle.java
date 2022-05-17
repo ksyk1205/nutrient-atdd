@@ -29,6 +29,11 @@ public class SupplementTitle {
             throw new IllegalArgumentException(NAME_CANNOT_BE_EMPTY);
         }
     }
+
+    public SupplementTitle update(String name) {
+        return new SupplementTitle(name);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
