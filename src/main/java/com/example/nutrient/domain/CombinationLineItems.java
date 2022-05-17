@@ -6,6 +6,10 @@ import lombok.Getter;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
+
+import static com.example.nutrient.domain.Supplements.SUPPLEMENTS_MUST_NOT_BE_EMPTY;
 
 @Embeddable
 @Getter
@@ -30,8 +34,23 @@ public class CombinationLineItems {
         this.combinationLineItems = combinationLineItems;
     }
 
+    public CombinationLineItems(Supplements supplements) {
+        validateSupplements(supplements);
+
+        List<CombinationLineItem> combinationLineItems =
+                supplements.getSupplements().stream().map(CombinationLineItem::new).collect(Collectors.toList());
+        validate(combinationLineItems);
+        this.combinationLineItems = combinationLineItems;
+    }
+
+    private void validateSupplements(Supplements supplements) {
+        if (Objects.isNull(supplements)) {
+            throw new IllegalArgumentException(SUPPLEMENTS_MUST_NOT_BE_EMPTY);
+        }
+    }
+
     private void validate(List<CombinationLineItem> combinationLineItems) {
-        if (combinationLineItems.isEmpty()) {
+        if (Objects.isNull(combinationLineItems) || combinationLineItems.isEmpty()) {
             throw new IllegalArgumentException(COMBINATION_LINE_ITEMS_MUST_NOT_BE_EMPTY);
         }
         if (isExceedMaxSize(combinationLineItems.size())) {
@@ -47,7 +66,8 @@ public class CombinationLineItems {
     }
 
     private boolean isDuplicated(List<CombinationLineItem> combinationLineItems) {
-        // TODO: 영양제 중복 체크
-        return true;
+        List<Supplement> supplements = combinationLineItems
+                .stream().map(CombinationLineItem::getSupplement).collect(Collectors.toList());
+        return new Supplements(supplements).isDuplicated();
     }
 }

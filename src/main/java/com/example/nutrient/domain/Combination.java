@@ -1,10 +1,17 @@
 package com.example.nutrient.domain;
 
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 import java.util.List;
 import java.util.UUID;
 
+import static lombok.AccessLevel.PROTECTED;
+
 @Entity
+@NoArgsConstructor(access = PROTECTED)
+@AllArgsConstructor
 public class Combination {
     @Column(name = "id", columnDefinition = "varbinary(16)")
     @Id
@@ -21,11 +28,11 @@ public class Combination {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(
-            name = "health_condition_id",
+            name = "health_status_id",
             columnDefinition = "varbinary(16)",
-            foreignKey = @ForeignKey(name = "fk_combination_to_health_condition")
+            foreignKey = @ForeignKey(name = "fk_combination_to_health_status")
     )
-    private HealthCondition healthCondition;
+    private HealthStatus healthStatus;
 
     @Embedded
     private CombinationLineItems combinationLineItems;
@@ -34,20 +41,20 @@ public class Combination {
         return id;
     }
 
-    public CombinationTitle getTitle() {
-        return title;
+    public String getTitle() {
+        return title.getTitle();
     }
 
-    public CombinationContent getContent() {
-        return content;
+    public String getContent() {
+        return content.getContent();
     }
 
     public Gender getRecommendedGender() {
         return recommendedGender;
     }
 
-    public HealthCondition getHealthCondition() {
-        return healthCondition;
+    public HealthStatus getHealthStatus() {
+        return healthStatus;
     }
 
     public List<CombinationLineItem> getCombinationLineItems() {

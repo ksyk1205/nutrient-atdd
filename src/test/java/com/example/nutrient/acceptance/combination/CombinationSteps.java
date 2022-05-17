@@ -33,8 +33,8 @@ public class CombinationSteps {
     }
 
     @When("영양제 조합 생성 요청")
-    public static ExtractableResponse<Response> 영양제_조합_생성_요청(String accessToken, String title, String content, List<String> combinationLineItemIds, String healthConditionId) {
-        Map<String, Object> createParams = createCombinationCreateParams(title, content, combinationLineItemIds, Gender.ALL, healthConditionId);
+    public static ExtractableResponse<Response> 영양제_조합_생성_요청(String accessToken, String title, String content, List<String> supplementIds, String healthStatusId) {
+        Map<String, Object> createParams = createCombinationCreateParams(title, content, supplementIds, Gender.ALL, healthStatusId);
         return RestAssured.given().log().all()
                 .auth().oauth2(accessToken)
                 .contentType(ContentType.JSON)
@@ -44,13 +44,13 @@ public class CombinationSteps {
     }
 
     private static Map<String, Object> createCombinationCreateParams(
-            String title, String content, List<String> combinationLineItemIds, Gender recommendedGender, String healthConditionId) {
+            String title, String content, List<String> supplementIds, Gender recommendedGender, String healthStatusId) {
         Map<String, Object> params = new HashMap<>();
         params.put("title", title);
         params.put("content", content);
-        params.put("combinationLineItemIds", combinationLineItemIds);
+        params.put("supplementIds", supplementIds);
         params.put("recommendedGender", recommendedGender);
-        params.put("healthConditionId", healthConditionId);
+        params.put("healthStatusId", healthStatusId);
         return params;
     }
 
