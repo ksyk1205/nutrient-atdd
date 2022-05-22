@@ -14,16 +14,20 @@ public class CategoryContent {
     private final static int LOWEST_DEPTH  = 0;
     private final int depth;
 
-    public CategoryContent(int depth) {
+    public CategoryContent(Integer depth) {
+        int basicDepth = 0;
+        if(depth != null){
+            basicDepth = depth;
+        }
         validate(depth);
-        this.depth = depth;
+        this.depth = basicDepth;
     }
 
     protected CategoryContent() {
         this.depth = 0;
     }
 
-    private void validate(int depth){
+    private void validate(Integer depth){
         if(depth < LOWEST_DEPTH){
             throw new CategoryException(CATEGORY_DEPTH_MUST_NOT_UNDER_LOWEST_DEPTH);
         }

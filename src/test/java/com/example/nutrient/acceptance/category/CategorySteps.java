@@ -36,7 +36,7 @@ public class CategorySteps {
 
     @Then("카테고리 생성됨")
     public void 카테고리_생성됨(int statusCode) {
-        assertThat(statusCode).isEqualTo(CREATED.value());;
+        assertThat(statusCode).isEqualTo(CREATED.value());
     }
     @When("카테고리 수정 요청")
     public void 카테고리_수정_요청() {
