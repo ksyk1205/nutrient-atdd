@@ -7,21 +7,20 @@ import org.junit.jupiter.params.provider.NullAndEmptySource;
 
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.*;
 
-class HealthConditionNameTest {
+class HealthStatusNameTest {
     @DisplayName("건강 상태 이름을 생성한다")
     @Test
     void create() {
-        assertThatCode(() -> new HealthConditionName("무기력증"))
+        assertThatCode(() -> new HealthStatusName("무기력증"))
                 .doesNotThrowAnyException();
     }
 
-    @DisplayName("건강상태 이름은 비어있지 않아야 한다")
+    @DisplayName("건강 상태 이름은 비어있지 않아야 한다")
     @ParameterizedTest
     @NullAndEmptySource
     void createNullAndEmpty(String name) {
-        assertThatThrownBy(() -> new HealthConditionName(name))
+        assertThatThrownBy(() -> new HealthStatusName(name))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 }

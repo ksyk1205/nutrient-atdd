@@ -1,6 +1,6 @@
 package com.example.nutrient.application.dto.combination;
 
-import com.example.nutrient.domain.Gender;
+import com.example.nutrient.domain.*;
 import lombok.Getter;
 
 import java.util.List;
@@ -10,15 +10,26 @@ import java.util.UUID;
 public class CombinationCreateRequest {
     private String title;
     private String content;
-    private List<UUID> combinationLineItemIds;
+    private List<UUID> supplementIds;
     private Gender recommendedGender;
-    private UUID healthConditionId;
+    private UUID healthStatusId;
 
-    public CombinationCreateRequest(String title, String content, List<UUID> combinationLineItemIds, Gender recommendedGender, UUID healthConditionId) {
+    public CombinationCreateRequest(String title, String content, List<UUID> supplementIds, Gender recommendedGender, UUID healthStatusId) {
         this.title = title;
         this.content = content;
-        this.combinationLineItemIds = combinationLineItemIds;
+        this.supplementIds = supplementIds;
         this.recommendedGender = recommendedGender;
-        this.healthConditionId = healthConditionId;
+        this.healthStatusId = healthStatusId;
+    }
+
+    public Combination toCombination(HealthStatus healthStatus, CombinationLineItems combinationLineItems) {
+        return new Combination(
+                UUID.randomUUID(),
+                new CombinationTitle(title),
+                new CombinationContent(content),
+                recommendedGender,
+                healthStatus,
+                combinationLineItems
+        );
     }
 }
