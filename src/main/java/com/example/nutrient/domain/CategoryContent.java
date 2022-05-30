@@ -19,7 +19,8 @@ public class CategoryContent {
         if(depth != null){
             basicDepth = depth;
         }
-        validate(depth);
+        validate(basicDepth);
+      
         this.depth = basicDepth;
     }
 

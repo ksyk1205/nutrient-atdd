@@ -14,4 +14,9 @@ public class CategoryCreateRequest {
     private String name;
 
     private Integer depth;
+
+    public CategoryCreateRequest(String name){
+        this.name = name;
+    }
+
 }
