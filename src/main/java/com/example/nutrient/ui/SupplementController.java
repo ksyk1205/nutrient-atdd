@@ -9,6 +9,7 @@ import java.net.URI;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -29,7 +30,7 @@ public class SupplementController {
     }
 
     @PatchMapping
-    public ResponseEntity<SupplementUpdateResponse> create(
+    public ResponseEntity<SupplementUpdateResponse> update(
         @RequestBody @Valid SupplementUpdateRequest request){
         SupplementUpdateResponse response = supplementService.update(request);
         return ResponseEntity.ok().body(response);
