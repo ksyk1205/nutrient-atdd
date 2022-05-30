@@ -4,20 +4,14 @@ import static javax.persistence.FetchType.LAZY;
 import static lombok.AccessLevel.PRIVATE;
 import static lombok.AccessLevel.PROTECTED;
 
-import com.example.nutrient.application.dto.supplement.SupplementCreateResponse.CategoryResponse;
-import java.time.LocalDate;
 import java.util.UUID;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.ForeignKey;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.validation.constraints.NotEmpty;
-import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -55,12 +49,12 @@ public class Supplement extends BaseTimeEntity implements Persistable {
         return this.getCreatedAt() == null;
     }
 
-    public void updateTitle(SupplementTitle updateTitle) {
-        this.title = updateTitle;
+    public void updateTitle(SupplementTitle supplementTitle) {
+        this.title = supplementTitle;
     }
 
-    public void updateContent(SupplementContent update) {
-        this.content = update;
+    public void updateContent(SupplementContent supplementContent) {
+        this.content = supplementContent;
     }
 
     public void updateCategory(Category category) {

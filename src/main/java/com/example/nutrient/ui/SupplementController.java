@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -29,7 +30,7 @@ public class SupplementController {
         return ResponseEntity.created(URI.create("/api/supplements/" + response.getId())).body(response);
     }
 
-    @PatchMapping
+    @PutMapping
     public ResponseEntity<SupplementUpdateResponse> update(
         @RequestBody @Valid SupplementUpdateRequest request){
         SupplementUpdateResponse response = supplementService.update(request);

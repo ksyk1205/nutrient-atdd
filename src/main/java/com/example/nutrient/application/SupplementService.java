@@ -43,8 +43,8 @@ public class SupplementService {
     public SupplementUpdateResponse update(SupplementUpdateRequest request) {
         Supplement supplement = getSupplement(request.getId());
         Category category = getCategory(request.getCategoryId());
-        supplement.updateTitle(supplement.getTitle().update(request.getName()));
-        supplement.updateContent(supplement.getContent().update(request.getSerialNumber(), request.getPermitDate(),
+        supplement.updateTitle(new SupplementTitle(request.getName()));
+        supplement.updateContent(new SupplementContent(request.getSerialNumber(), request.getPermitDate(),
             request.getExpirationDate(), request.getIntake(), request.getMainFunctional(),
             request.getPrecautions(), request.getStorageWay()));
         supplement.updateCategory(category);
