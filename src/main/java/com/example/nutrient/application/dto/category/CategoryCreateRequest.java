@@ -18,4 +18,5 @@ public class CategoryCreateRequest {
     public CategoryCreateRequest(String name){
         this.name = name;
     }
+
 }

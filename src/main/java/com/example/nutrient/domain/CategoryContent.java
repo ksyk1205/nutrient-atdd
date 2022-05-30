@@ -20,6 +20,7 @@ public class CategoryContent {
             basicDepth = depth;
         }
         validate(basicDepth);
+      
         this.depth = basicDepth;
     }
 
