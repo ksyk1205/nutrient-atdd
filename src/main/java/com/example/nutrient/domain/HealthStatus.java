@@ -1,7 +1,5 @@
 package com.example.nutrient.domain;
 
-import lombok.Getter;
-
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
@@ -9,20 +7,27 @@ import javax.persistence.Id;
 import java.util.UUID;
 
 @Entity
-@Getter
-public class HealthCondition {
+public class HealthStatus {
     @Column(name = "id", columnDefinition = "varbinary(16)")
     @Id
     private UUID id;
 
     @Embedded
-    private HealthConditionName name;
+    private HealthStatusName name;
 
-    protected HealthCondition() {
+    protected HealthStatus() {
     }
 
-    public HealthCondition(UUID id, HealthConditionName name) {
+    public HealthStatus(UUID id, HealthStatusName name) {
         this.id = id;
         this.name = name;
+    }
+
+    public UUID getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name.getName();
     }
 }

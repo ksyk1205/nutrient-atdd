@@ -12,20 +12,35 @@ import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWit
 import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
 
 public class CategoryDocumentationFixture {
-    public static final CategoryCreateRequest CREATE_REQUEST;
+    public static final CategoryCreateRequest CREATE_PARENT_REQUEST;
 
-    public static final CategoryCreateResponse RESPONSE;
+    public static final CategoryCreateRequest CREATE_CHILD_REQUEST;
+
+    public static final CategoryCreateResponse CREATE_PARENT_RESPONSE;
+
+    public static final CategoryCreateResponse CREATE_CHILD_RESPONSE;
 
     static {
 
-        CREATE_REQUEST = new CategoryCreateRequest(
+        CREATE_PARENT_REQUEST  = new CategoryCreateRequest(
                 "비타민"
         );
 
-
-        RESPONSE = new CategoryCreateResponse(
+        CREATE_PARENT_RESPONSE = new CategoryCreateResponse(
                 UUID.randomUUID(),
                 "비타민"
+                ,0
+        );
+
+
+        CREATE_CHILD_REQUEST  = new CategoryCreateRequest(
+                "비타민D"
+                ,1
+        );
+
+        CREATE_CHILD_RESPONSE = new CategoryCreateResponse(
+                UUID.randomUUID(),
+                "비타민D"
                 ,1
         );
     }

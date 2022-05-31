@@ -21,7 +21,7 @@ class CategoryContentTest {
 
     @DisplayName("카테고리 레벨은 0보다 같거나 높아야합니다.")
     @ParameterizedTest
-    @CsvSource(value = {"-1","-999999"})
+    @CsvSource(value = {"-1"})
     void createNullAndEmpty(int depth) {
         assertThatThrownBy(() -> new CategoryContent(depth))
                 .isInstanceOf(CategoryException.class);

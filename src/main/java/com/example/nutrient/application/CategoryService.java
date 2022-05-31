@@ -8,6 +8,8 @@ import com.example.nutrient.domain.repository.CategoryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.UUID;
+
 @Service
 @RequiredArgsConstructor
 public class CategoryService {
@@ -17,7 +19,9 @@ public class CategoryService {
     public CategoryCreateResponse create(CategoryCreateRequest request) {
         Category saveCategory = categoryRepository.save(
                 Category.builder()
+                        .id(UUID.randomUUID())
                         .title(new CategoryTitle(request.getName()))
+                        .content(new CategoryContent(request.getDepth()))
                         .build());
         return CategoryCreateResponse.create(saveCategory);
     }

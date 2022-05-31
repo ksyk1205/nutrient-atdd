@@ -1,11 +1,13 @@
 package com.example.nutrient.domain;
 
+import lombok.Getter;
 import org.apache.logging.log4j.util.Strings;
 
 import javax.persistence.Embeddable;
 import javax.persistence.Lob;
 import java.util.Objects;
 
+@Getter
 @Embeddable
 public class CombinationContent {
     private static final String COMBINATION_CONTENT_MUST_NOT_BE_EMPTY = "조합 내용은 비어있지 않아야 합니다.";
@@ -17,7 +19,7 @@ public class CombinationContent {
         this.content = null;
     }
 
-    protected CombinationContent(String content) {
+    public CombinationContent(String content) {
         validation(content);
         this.content = content;
     }
