@@ -32,17 +32,37 @@ public class CategoryDocumentation extends Documentation {
     private ObjectMapper objectMapper;
 
     @Test
-    void create() throws Exception {
-        given(categoryService.create(any(CategoryCreateRequest.class))).willReturn(RESPONSE);
+    void parentCreate() throws Exception {
+        given(categoryService.create(any(CategoryCreateRequest.class))).willReturn(CREATE_PARENT_RESPONSE);
 
         mockMvc.perform(post(ENDPOINT)
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(CREATE_REQUEST)))
+                        .content(objectMapper.writeValueAsString(CREATE_PARENT_REQUEST)))
                 .andExpect(status().isCreated())
                 .andDo(print())
                 .andDo(document("category-create",
                         requestFields(
                                 fieldWithPath("name").description("카테고리명")
+                                , fieldWithPath("depth").description("카테고리레벨")
+                        ),
+                        getResponseFields())
+                );
+
+    }
+
+    @Test
+    void childCreate() throws Exception {
+        given(categoryService.create(any(CategoryCreateRequest.class))).willReturn(CREATE_CHILD_RESPONSE);
+
+        mockMvc.perform(post(ENDPOINT)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(CREATE_CHILD_REQUEST)))
+                .andExpect(status().isCreated())
+                .andDo(print())
+                .andDo(document("category-create",
+                        requestFields(
+                                fieldWithPath("name").description("카테고리명")
+                                , fieldWithPath("depth").description("카테고리레벨")
                         ),
                         getResponseFields())
                 );
