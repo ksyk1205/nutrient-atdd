@@ -112,15 +112,16 @@ public class SupplementSteps {
     }
 
     @When("영양제 삭제 요청")
-    public static void 영양제_삭제_요청(UUID uuid) {
-
-        throw new io.cucumber.java.PendingException();
+    public static ExtractableResponse<Response> 영양제_삭제_요청(UUID uuid) {
+        return RestAssured.given().log().all()
+            .accept(APPLICATION_JSON_VALUE)
+            .when().delete(ENDPOINT + "/{id}", uuid)
+            .then().log().all().extract();
     }
 
     @Then("영양제 삭제됨")
-    public void 영양제_삭제됨() {
-        // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
+    public static void 영양제_삭제됨(int statusCode) {
+        assertThat(statusCode).isEqualTo(OK.value());
     }
 
 

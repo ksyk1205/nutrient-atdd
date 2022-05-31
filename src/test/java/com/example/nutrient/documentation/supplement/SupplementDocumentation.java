@@ -9,6 +9,7 @@ import static org.mockito.BDDMockito.any;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -19,11 +20,13 @@ import com.example.nutrient.application.dto.supplement.SupplementUpdateRequest;
 import com.example.nutrient.documentation.Documentation;
 import com.example.nutrient.ui.SupplementController;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.util.UUID;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 @WebMvcTest(SupplementController.class)
 public class SupplementDocumentation extends Documentation {
@@ -67,9 +70,9 @@ public class SupplementDocumentation extends Documentation {
         mockMvc.perform(post(ENDPOINT)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(UPDATE_REQUEST)))
-            .andExpect(status().isCreated())
+            .andExpect(status().isOk())
             .andDo(print())
-            .andDo(document("supplement-create",
+            .andDo(document("supplement-update",
                 requestFields(
                     fieldWithPath("id").description("영양제 ID"),
                     fieldWithPath("name").description("품목명"),
@@ -85,6 +88,19 @@ public class SupplementDocumentation extends Documentation {
                 getResponseFields())
             );
 
+    }
+
+    @Test
+    void remove() throws Exception {
+        mockMvc.perform(delete(ENDPOINT + "/{id}", UUID.randomUUID())
+                .accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isOk())
+            .andDo(print())
+            .andDo(document("supplement-delete",
+                requestFields(
+                    fieldWithPath("id").description("영양제 ID")
+                ))
+            );
     }
 
 }
