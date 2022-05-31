@@ -24,27 +24,5 @@ class SupplementTitleTest {
         assertThatThrownBy(() -> new SupplementTitle(name))
             .isInstanceOf(IllegalArgumentException.class);
     }
-    @Test
-    @DisplayName("영양제 제목을 수정한다")
-    void update() {
-        SupplementTitle supplementTitle = new SupplementTitle("6년근 고려홍삼정 PREMIUM");
-        assertThatCode(() -> supplementTitle.update("클러스터"))
-            .doesNotThrowAnyException();
-        assertNotEquals(supplementTitle.update("클러스터"), supplementTitle);
-    }
 
-    @ParameterizedTest
-    @NullAndEmptySource
-    @DisplayName("영양제 제목이 없을 경우 수정하지 않는다")
-    void notUpdateToNullAndEmpty(String name) {
-        SupplementTitle supplementTitle = new SupplementTitle("6년근 고려홍삼정 PREMIUM");
-        assertEquals(supplementTitle.update(name), supplementTitle);
-    }
-
-    @Test
-    @DisplayName("영양제 제목이 같을경우 수정하지 않는다.")
-    void notUpdate() {
-        SupplementTitle supplementTitle = new SupplementTitle("6년근 고려홍삼정 PREMIUM");
-        assertEquals(supplementTitle.update("6년근 고려홍삼정 PREMIUM"), supplementTitle);
-    }
 }

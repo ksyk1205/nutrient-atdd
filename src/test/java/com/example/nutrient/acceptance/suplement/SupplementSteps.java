@@ -26,6 +26,24 @@ public class SupplementSteps {
     public void 로그인_되어_있음() {
 
     }
+    @Given("영양제 생성되어있음")
+    public static ExtractableResponse<Response> 영양제_생성되어있음(String name, UUID categoryId) {
+        SupplementCreateRequest tempSupplementCreateRequest = new SupplementCreateRequest(name, "201100200015",
+            "2011-12-09",
+            "제조일로부터 24개월",
+            "1일 3회, 1회 1스푼(3.2g)씩 물에 녹여 섭취 하십시요.",
+            "①면역력 증진②피로개선③혈소판 응집 억제를 통한 혈액흐름에 도움④기억력 개선⑤항산화에 도움을 줄 수 있음",
+            "[홍삼제품]의약품(당뇨치료제, 혈액항응고제) 복용 시 섭취에 주의 2) 특이체질등 알레르기 체질의 경우 제품성분을 확인 후 섭취하시기 바랍니다. 3) 15세 이하의 어린이는 상기 섭취량의 절반 정도를 섭취하시요. 4) 제품 개봉 또는 섭취시에 포장재로 인한 상처를 입을수 있으니주의 하십시오.",
+            "직사광선을 피해 건조하고 서늘한 곳에서 보관한다.", categoryId);
+        Map<String, Object> createParams = createSupplementCreateParams(tempSupplementCreateRequest);
+        return RestAssured.given().log().all()
+            .body(createParams)
+            .contentType(APPLICATION_JSON_VALUE)
+            .accept(APPLICATION_JSON_VALUE)
+            .when().post(ENDPOINT)
+            .then().log().all().extract();
+    }
+
 
     @Given("카테고리 생성되어 있음")
     public static UUID 카테고리_생성되어_있음(String name) {
@@ -69,7 +87,7 @@ public class SupplementSteps {
             .body(updateParams)
             .contentType(APPLICATION_JSON_VALUE)
             .accept(APPLICATION_JSON_VALUE)
-            .when().patch(ENDPOINT)
+            .when().put(ENDPOINT)
             .then().log().all().extract();
     }
 
@@ -94,8 +112,8 @@ public class SupplementSteps {
     }
 
     @When("영양제 삭제 요청")
-    public void 영양제_삭제_요청() {
-        // Write code here that turns the phrase above into concrete actions
+    public static void 영양제_삭제_요청(UUID uuid) {
+
         throw new io.cucumber.java.PendingException();
     }
 

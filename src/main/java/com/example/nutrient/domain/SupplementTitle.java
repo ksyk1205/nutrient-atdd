@@ -30,10 +30,6 @@ public class SupplementTitle {
         }
     }
 
-    public SupplementTitle update(String name) {
-        return new SupplementTitle(name);
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {
