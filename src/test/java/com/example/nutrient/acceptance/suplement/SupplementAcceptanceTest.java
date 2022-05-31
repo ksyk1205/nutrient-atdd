@@ -1,5 +1,6 @@
 package com.example.nutrient.acceptance.suplement;
 
+import static com.example.nutrient.acceptance.suplement.SupplementSteps.영양제_삭제_요청;
 import static com.example.nutrient.acceptance.suplement.SupplementSteps.영양제_생성_요청;
 import static com.example.nutrient.acceptance.suplement.SupplementSteps.영양제_생성됨;
 import static com.example.nutrient.acceptance.suplement.SupplementSteps.영양제_수정_요청;
@@ -59,6 +60,7 @@ public class SupplementAcceptanceTest extends AcceptanceTest {
             클로렐라
         ));
         영양제_수정됨(김화란_클로렐라.statusCode());
+        영양제_삭제_요청(고려홍삼정_PREMIUM_ID);
 
     }
 
