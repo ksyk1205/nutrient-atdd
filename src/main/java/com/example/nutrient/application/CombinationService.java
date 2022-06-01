@@ -2,6 +2,8 @@ package com.example.nutrient.application;
 
 import com.example.nutrient.application.dto.combination.CombinationCreateRequest;
 import com.example.nutrient.application.dto.combination.CombinationCreateResponse;
+import com.example.nutrient.application.dto.combination.CombinationUpdateRequest;
+import com.example.nutrient.application.dto.combination.CombinationUpdateResponse;
 import com.example.nutrient.domain.*;
 import com.example.nutrient.domain.repository.CombinationRepository;
 import com.example.nutrient.domain.repository.HealthStatusRepository;
@@ -38,5 +40,9 @@ public class CombinationService {
 
     private Supplements findAllById(List<UUID> ids) {
         return new Supplements(supplementRepository.findAllById(ids));
+    }
+
+    public CombinationUpdateResponse update(UUID combinationId, CombinationUpdateRequest request) {
+        return null;
     }
 }
