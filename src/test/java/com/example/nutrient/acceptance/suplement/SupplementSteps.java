@@ -14,6 +14,7 @@ import io.cucumber.java.en.When;
 import io.restassured.RestAssured;
 import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;
+import io.restassured.response.ResponseBodyExtractionOptions;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -124,5 +125,16 @@ public class SupplementSteps {
         assertThat(statusCode).isEqualTo(OK.value());
     }
 
-
+    @When("영양제 상세 조회")
+    public static ExtractableResponse<Response> 영양제_상세_조회(UUID id) {
+        return RestAssured.given().log().all()
+            .accept(APPLICATION_JSON_VALUE)
+            .when().get(ENDPOINT+ "/{id}", id)
+            .then().log().all().extract();
+    }
+    @Then("영양제 상세 조회됨")
+    public static void 영양제_상세_조회됨(int statusCode, ResponseBodyExtractionOptions body) {
+        assertThat(statusCode).isEqualTo(OK);
+        assertThat(body.jsonPath().getList("least").size()).isGreaterThan(0);
+    }
 }

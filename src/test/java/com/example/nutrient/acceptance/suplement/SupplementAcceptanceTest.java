@@ -2,7 +2,10 @@ package com.example.nutrient.acceptance.suplement;
 
 import static com.example.nutrient.acceptance.suplement.SupplementSteps.영양제_삭제_요청;
 import static com.example.nutrient.acceptance.suplement.SupplementSteps.영양제_삭제됨;
+import static com.example.nutrient.acceptance.suplement.SupplementSteps.영양제_상세_조회;
+import static com.example.nutrient.acceptance.suplement.SupplementSteps.영양제_상세_조회됨;
 import static com.example.nutrient.acceptance.suplement.SupplementSteps.영양제_생성_요청;
+import static com.example.nutrient.acceptance.suplement.SupplementSteps.영양제_생성되어있음;
 import static com.example.nutrient.acceptance.suplement.SupplementSteps.영양제_생성됨;
 import static com.example.nutrient.acceptance.suplement.SupplementSteps.영양제_수정_요청;
 import static com.example.nutrient.acceptance.suplement.SupplementSteps.영양제_수정됨;
@@ -25,6 +28,35 @@ public class SupplementAcceptanceTest extends AcceptanceTest {
     private UUID 홍삼제품;
     private UUID 클로렐라;
 
+    @Getter
+    @AllArgsConstructor
+    static class SupplementCreateRequest {
+        private String name;
+        private String serialNumber;
+        private String permitDate;
+        private String expirationDate;
+        private String intake;
+        private String mainFunctional;
+        private String precautions;
+        private String storageWay;
+        private UUID categoryId;
+    }
+
+    @Getter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    static class SupplementUpdateRequest {
+        private UUID id;
+        private String name;
+        private String serialNumber;
+        private String permitDate;
+        private String expirationDate;
+        private String intake;
+        private String mainFunctional;
+        private String precautions;
+        private String storageWay;
+        private UUID categoryId;
+    }
     @BeforeEach
     public void setUp() {
         super.setUp();
@@ -35,6 +67,7 @@ public class SupplementAcceptanceTest extends AcceptanceTest {
     @Test
     @DisplayName("영양제를 관리한다")
     public void manage() {
+
         ExtractableResponse<Response> 고려홍삼정_PREMIUM	 = 영양제_생성_요청(
             new SupplementCreateRequest(
                 "6년근 고려홍삼정 PREMIUM",
@@ -66,33 +99,13 @@ public class SupplementAcceptanceTest extends AcceptanceTest {
         영양제_삭제됨(영양제_삭제_요청.statusCode());
     }
 
-    @Getter
-    @AllArgsConstructor
-    static class SupplementCreateRequest {
-        private String name;
-        private String serialNumber;
-        private String permitDate;
-        private String expirationDate;
-        private String intake;
-        private String mainFunctional;
-        private String precautions;
-        private String storageWay;
-        private UUID categoryId;
+    @Test
+    @DisplayName("영양제를 상세조회한다")
+    public void search() {
+        ExtractableResponse<Response> 김화란_클로렐라 = 영양제_생성되어있음("김화란 클로렐라", 클로렐라);
+        UUID id = 김화란_클로렐라.response().jsonPath().getUUID("id");
+        ExtractableResponse<Response> 김화란_클로렐라_상세_정보 = 영양제_상세_조회(id);
+        영양제_상세_조회됨(김화란_클로렐라_상세_정보.statusCode(), 김화란_클로렐라_상세_정보.body());
     }
 
-    @Getter
-    @NoArgsConstructor
-    @AllArgsConstructor
-    static class SupplementUpdateRequest {
-        private UUID id;
-        private String name;
-        private String serialNumber;
-        private String permitDate;
-        private String expirationDate;
-        private String intake;
-        private String mainFunctional;
-        private String precautions;
-        private String storageWay;
-        private UUID categoryId;
-    }
 }
