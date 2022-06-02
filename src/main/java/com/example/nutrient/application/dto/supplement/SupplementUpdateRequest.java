@@ -12,9 +12,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 @NoArgsConstructor
 @AllArgsConstructor
 public class SupplementUpdateRequest {
-    @UUIDValid
-    private UUID id;
-
     private String name;
 
     private String serialNumber;

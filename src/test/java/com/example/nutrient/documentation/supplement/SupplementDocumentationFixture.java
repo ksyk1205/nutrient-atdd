@@ -64,7 +64,6 @@ public class SupplementDocumentationFixture {
             new SupplementUpdateResponse.CategoryResponse(UPDATE_CATEGORY_ID, "클로렐라")
         );
         UPDATE_REQUEST = new SupplementUpdateRequest(
-            CREATE_RESPONSE.getId(),
             "김화란 클로렐라",
             "20040020014500",
             LocalDate.of(2010, 8, 13),

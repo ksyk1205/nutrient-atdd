@@ -67,7 +67,7 @@ public class SupplementDocumentation extends Documentation {
     void update() throws Exception {
         given(supplementService.update(any(SupplementUpdateRequest.class))).willReturn(UPDATE_RESPONSE);
 
-        mockMvc.perform(post(ENDPOINT)
+        mockMvc.perform(post(ENDPOINT + "/{id}", CREATE_RESPONSE.getId())
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(UPDATE_REQUEST)))
             .andExpect(status().isOk())

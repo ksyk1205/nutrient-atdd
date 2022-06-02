@@ -82,19 +82,18 @@ public class SupplementSteps {
     }
 
     @When("영양제 수정 요청")
-    public static ExtractableResponse<Response> 영양제_수정_요청(SupplementUpdateRequest supplementUpdateRequest) {
+    public static ExtractableResponse<Response> 영양제_수정_요청(UUID id,SupplementUpdateRequest supplementUpdateRequest) {
         Map<String, Object> updateParams = createSupplementUpdateParams(supplementUpdateRequest);
         return RestAssured.given().log().all()
             .body(updateParams)
             .contentType(APPLICATION_JSON_VALUE)
             .accept(APPLICATION_JSON_VALUE)
-            .when().put(ENDPOINT)
+            .when().put(ENDPOINT + "/{id}", id)
             .then().log().all().extract();
     }
 
     private static Map<String, Object> createSupplementUpdateParams(SupplementUpdateRequest supplementUpdateRequest) {
         Map<String, Object> params = new HashMap<>();
-        params.put("id", supplementUpdateRequest.getId());
         params.put("name", supplementUpdateRequest.getName());
         params.put("serialNumber", supplementUpdateRequest.getSerialNumber());
         params.put("permitDate", supplementUpdateRequest.getPermitDate());

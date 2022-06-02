@@ -46,7 +46,6 @@ public class SupplementAcceptanceTest extends AcceptanceTest {
     @NoArgsConstructor
     @AllArgsConstructor
     static class SupplementUpdateRequest {
-        private UUID id;
         private String name;
         private String serialNumber;
         private String permitDate;
@@ -81,8 +80,7 @@ public class SupplementAcceptanceTest extends AcceptanceTest {
         영양제_생성됨(고려홍삼정_PREMIUM.statusCode());
 
         UUID 고려홍삼정_PREMIUM_ID = 고려홍삼정_PREMIUM.response().jsonPath().getUUID("id");
-        ExtractableResponse<Response> 김화란_클로렐라 = 영양제_수정_요청(new SupplementUpdateRequest(
-            고려홍삼정_PREMIUM_ID,
+        ExtractableResponse<Response> 김화란_클로렐라 = 영양제_수정_요청(고려홍삼정_PREMIUM_ID, new SupplementUpdateRequest(
             "김화란 클로렐라",
             "20040020014500",
             "2010-08-13",

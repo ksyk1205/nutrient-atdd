@@ -33,8 +33,9 @@ public class SupplementController {
         return ResponseEntity.created(URI.create("/api/supplements/" + response.getId())).body(response);
     }
 
-    @PutMapping
+    @PutMapping("/{id}")
     public ResponseEntity<SupplementUpdateResponse> update(
+        @PathVariable UUID id,
         @RequestBody @Valid SupplementUpdateRequest request){
         SupplementUpdateResponse response = supplementService.update(request);
         return ResponseEntity.ok().body(response);
