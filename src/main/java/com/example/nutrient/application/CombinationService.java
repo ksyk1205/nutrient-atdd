@@ -26,23 +26,44 @@ public class CombinationService {
 
     public CombinationCreateResponse create(CombinationCreateRequest request) {
         HealthStatus healthStatus = findHealthStatusById(request.getHealthStatusId());
-        Supplements supplements = findAllById(request.getSupplementIds());
+        Supplements supplements = findAllSupplementsById(request.getSupplementIds());
         CombinationLineItems combinationLineItems = new CombinationLineItems(supplements);
         Combination saveCombination = combinationRepository.save(request.toCombination(healthStatus, combinationLineItems));
         return CombinationCreateResponse.of(saveCombination);
     }
 
-    public HealthStatus findHealthStatusById(UUID uuid) {
+    public HealthStatus findHealthStatusById(UUID id) {
         return haHealthStatusRepository
-                .findById(uuid)
+                .findById(id)
                 .orElseThrow(EntityNotFoundException::new);
     }
 
-    private Supplements findAllById(List<UUID> ids) {
+    private Supplements findAllSupplementsById(List<UUID> ids) {
         return new Supplements(supplementRepository.findAllById(ids));
     }
 
     public CombinationUpdateResponse update(UUID combinationId, CombinationUpdateRequest request) {
-        return null;
+        Combination combination = findById(combinationId);
+        HealthStatus healthStatus = findHealthStatusById(request.getHealthStatusId());
+        Supplements supplements = findAllSupplementsById(request.getSupplementIds());
+        CombinationLineItems combinationLineItems = new CombinationLineItems(supplements);
+
+        changeCombination(combination, request, healthStatus, combinationLineItems);
+        return CombinationUpdateResponse.of(combination);
+    }
+
+    private Combination findById(UUID combinationId) {
+        return combinationRepository.findById(combinationId).orElseThrow(EntityNotFoundException::new);
+    }
+
+    private void changeCombination(
+            Combination combination,
+            CombinationUpdateRequest request,
+            HealthStatus healthStatus,
+            CombinationLineItems combinationLineItems) {
+        combination.changeTitle(new CombinationTitle(request.getTitle()));
+        combination.changeContent(new CombinationContent(request.getContent()));
+        combination.changeCombinationLineItems(combinationLineItems);
+        combination.changeRecommendedTarget(request.getRecommendedGender(), healthStatus);
     }
 }

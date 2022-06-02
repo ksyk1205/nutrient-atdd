@@ -21,15 +21,4 @@ public class CombinationUpdateRequest {
         this.recommendedGender = recommendedGender;
         this.healthStatusId = healthStatusId;
     }
-
-    public Combination toCombination(HealthStatus healthStatus, CombinationLineItems combinationLineItems) {
-        return new Combination(
-                UUID.randomUUID(),
-                new CombinationTitle(title),
-                new CombinationContent(content),
-                recommendedGender,
-                healthStatus,
-                combinationLineItems
-        );
-    }
 }
