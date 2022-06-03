@@ -132,8 +132,7 @@ public class SupplementSteps {
             .then().log().all().extract();
     }
     @Then("영양제 상세 조회됨")
-    public static void 영양제_상세_조회됨(int statusCode, ResponseBodyExtractionOptions body) {
-        assertThat(statusCode).isEqualTo(OK);
-        assertThat(body.jsonPath().getList("least").size()).isGreaterThan(0);
+    public static void 영양제_상세_조회됨(int statusCode) {
+        assertThat(statusCode).isEqualTo(OK.value());
     }
 }

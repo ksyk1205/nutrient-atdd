@@ -4,6 +4,7 @@ import static com.example.nutrient.documentation.supplement.SupplementDocumentat
 import static com.example.nutrient.documentation.supplement.SupplementDocumentationFixture.CREATE_RESPONSE;
 import static com.example.nutrient.documentation.supplement.SupplementDocumentationFixture.UPDATE_REQUEST;
 import static com.example.nutrient.documentation.supplement.SupplementDocumentationFixture.UPDATE_RESPONSE;
+import static com.example.nutrient.documentation.supplement.SupplementDocumentationFixture.getDetailSearchResponseFields;
 import static com.example.nutrient.documentation.supplement.SupplementDocumentationFixture.getResponseFields;
 import static org.mockito.BDDMockito.any;
 import static org.mockito.BDDMockito.given;
@@ -26,7 +27,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 @WebMvcTest(SupplementController.class)
 public class SupplementDocumentation extends Documentation {
@@ -65,7 +65,7 @@ public class SupplementDocumentation extends Documentation {
 
     @Test
     void update() throws Exception {
-        given(supplementService.update(any(SupplementUpdateRequest.class))).willReturn(UPDATE_RESPONSE);
+        given(supplementService.update(any(UUID.class), any(SupplementUpdateRequest.class))).willReturn(UPDATE_RESPONSE);
 
         mockMvc.perform(post(ENDPOINT + "/{id}", CREATE_RESPONSE.getId())
                 .contentType(MediaType.APPLICATION_JSON)
@@ -100,6 +100,19 @@ public class SupplementDocumentation extends Documentation {
                 requestFields(
                     fieldWithPath("id").description("영양제 ID")
                 ))
+            );
+    }
+
+    @Test
+    void search() throws Exception {
+        mockMvc.perform(delete(ENDPOINT + "/{id}", UUID.randomUUID())
+                .accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isOk())
+            .andDo(print())
+            .andDo(document("supplement-search",
+                requestFields(
+                    fieldWithPath("id").description("영양제 ID")
+                ), getDetailSearchResponseFields())
             );
     }
 

@@ -15,4 +15,7 @@ public interface SupplementRepository {
     List<Supplement> findAllById(Iterable<UUID> ids);
 
     void deleteById(UUID id);
+
+    Optional<Supplement> findByIdAndCategory(UUID id);
+
 }
