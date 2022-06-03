@@ -60,7 +60,7 @@ class CombinationDocumentation extends Documentation {
     void update() throws Exception {
         given(combinationService.update(any(UUID.class), any(CombinationUpdateRequest.class))).willReturn(UPDATE_RESPONSE);
 
-        mockMvc.perform(put(ENDPOINT+"/{combinationId}", UUID.randomUUID().toString())
+        mockMvc.perform(put(ENDPOINT + "/{combinationId}", UUID.randomUUID().toString())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(UPDATE_REQUEST)))
                 .andExpect(status().isOk())

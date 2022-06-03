@@ -33,9 +33,8 @@ public class CombinationService {
     }
 
     public HealthStatus findHealthStatusById(UUID id) {
-        return haHealthStatusRepository
-                .findById(id)
-                .orElseThrow(EntityNotFoundException::new);
+        return haHealthStatusRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("건강 상태를 찾을수 없습니다."));
     }
 
     private Supplements findAllSupplementsById(List<UUID> ids) {
@@ -53,7 +52,8 @@ public class CombinationService {
     }
 
     private Combination findById(UUID combinationId) {
-        return combinationRepository.findById(combinationId).orElseThrow(EntityNotFoundException::new);
+        return combinationRepository.findById(combinationId)
+                .orElseThrow(() -> new EntityNotFoundException("영양제 조합을 찾을 수 없습니다."));
     }
 
     private void changeCombination(
