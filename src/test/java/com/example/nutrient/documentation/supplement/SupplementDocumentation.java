@@ -4,11 +4,13 @@ import static com.example.nutrient.documentation.supplement.SupplementDocumentat
 import static com.example.nutrient.documentation.supplement.SupplementDocumentationFixture.CREATE_RESPONSE;
 import static com.example.nutrient.documentation.supplement.SupplementDocumentationFixture.UPDATE_REQUEST;
 import static com.example.nutrient.documentation.supplement.SupplementDocumentationFixture.UPDATE_RESPONSE;
+import static com.example.nutrient.documentation.supplement.SupplementDocumentationFixture.getDetailSearchResponseFields;
 import static com.example.nutrient.documentation.supplement.SupplementDocumentationFixture.getResponseFields;
 import static org.mockito.BDDMockito.any;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -19,6 +21,7 @@ import com.example.nutrient.application.dto.supplement.SupplementUpdateRequest;
 import com.example.nutrient.documentation.Documentation;
 import com.example.nutrient.ui.SupplementController;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.util.UUID;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -62,14 +65,14 @@ public class SupplementDocumentation extends Documentation {
 
     @Test
     void update() throws Exception {
-        given(supplementService.update(any(SupplementUpdateRequest.class))).willReturn(UPDATE_RESPONSE);
+        given(supplementService.update(any(UUID.class), any(SupplementUpdateRequest.class))).willReturn(UPDATE_RESPONSE);
 
-        mockMvc.perform(post(ENDPOINT)
+        mockMvc.perform(post(ENDPOINT + "/{id}", CREATE_RESPONSE.getId())
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(UPDATE_REQUEST)))
-            .andExpect(status().isCreated())
+            .andExpect(status().isOk())
             .andDo(print())
-            .andDo(document("supplement-create",
+            .andDo(document("supplement-update",
                 requestFields(
                     fieldWithPath("id").description("영양제 ID"),
                     fieldWithPath("name").description("품목명"),
@@ -85,6 +88,32 @@ public class SupplementDocumentation extends Documentation {
                 getResponseFields())
             );
 
+    }
+
+    @Test
+    void remove() throws Exception {
+        mockMvc.perform(delete(ENDPOINT + "/{id}", UUID.randomUUID())
+                .accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isOk())
+            .andDo(print())
+            .andDo(document("supplement-delete",
+                requestFields(
+                    fieldWithPath("id").description("영양제 ID")
+                ))
+            );
+    }
+
+    @Test
+    void search() throws Exception {
+        mockMvc.perform(delete(ENDPOINT + "/{id}", UUID.randomUUID())
+                .accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isOk())
+            .andDo(print())
+            .andDo(document("supplement-search",
+                requestFields(
+                    fieldWithPath("id").description("영양제 ID")
+                ), getDetailSearchResponseFields())
+            );
     }
 
 }
