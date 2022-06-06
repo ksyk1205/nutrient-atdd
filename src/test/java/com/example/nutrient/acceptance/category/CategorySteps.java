@@ -67,19 +67,18 @@ public class CategorySteps {
 
     @When("카테고리 수정 요청")
     public static ExtractableResponse<Response> 카테고리_수정_요청(UUID id, String name, int depth) {
-        Map<String, Object> updateParams = getCategoryUpdateParams(id, name, depth);
+        Map<String, Object> updateParams = getCategoryUpdateParams(name, depth);
 
         return RestAssured.given().log().all()
                 .body(updateParams)
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .accept(MediaType.APPLICATION_JSON_VALUE)
-                .when().put(ENDPOINT)
+                .when().put(ENDPOINT+"/{id}",id)
                 .then().log().all().extract();
     }
 
-    private static Map<String, Object> getCategoryUpdateParams(UUID id, String name, int depth) {
+    private static Map<String, Object> getCategoryUpdateParams(String name, int depth) {
         Map<String, Object> params = new HashMap<>();
-        params.put("id", id);
         params.put("name", name);
         params.put("depth", depth);
         return params;

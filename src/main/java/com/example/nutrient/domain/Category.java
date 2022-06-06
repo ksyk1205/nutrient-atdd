@@ -41,4 +41,20 @@ public class Category extends BaseTimeEntity implements Persistable {
     public boolean isNew() {
         return this.getCreatedAt() == null;
     }
+
+    public void updateTitle(String name) {
+        this.title = new CategoryTitle(name);
+    }
+
+    public void updateContent(Integer depth) {
+        this.content = new CategoryContent(depth);
+    }
+
+    public String getName() {
+        return this.getTitle().getName();
+    }
+
+    public int getDepth() {
+        return this.getContent().getDepth();
+    }
 }
