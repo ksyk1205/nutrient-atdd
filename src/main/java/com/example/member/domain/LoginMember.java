@@ -3,10 +3,12 @@ package com.example.member.domain;
 
 import com.example.auth.authentication.UserDetails;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 import java.util.UUID;
 
+@NoArgsConstructor
 @Getter
 public class LoginMember implements UserDetails {
     private UUID id;

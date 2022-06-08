@@ -5,14 +5,14 @@ import com.example.member.domain.LoginMember;
 import com.example.nutrient.application.CombinationService;
 import com.example.nutrient.application.dto.combination.CombinationCreateRequest;
 import com.example.nutrient.application.dto.combination.CombinationCreateResponse;
+import com.example.nutrient.application.dto.combination.CombinationUpdateRequest;
+import com.example.nutrient.application.dto.combination.CombinationUpdateResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
+import java.util.UUID;
 
 @RequestMapping("/api/combinations")
 @RestController
@@ -27,5 +27,13 @@ public class CombinationRestController {
         CombinationCreateResponse response = combinationService.create(request);
         return ResponseEntity.created(URI.create("/api/combinations/" + response.getId()))
                 .body(response);
+    }
+
+    @PutMapping("/{combinationId}")
+    public ResponseEntity<CombinationUpdateResponse> update(
+            @PathVariable UUID combinationId,
+            @RequestBody CombinationUpdateRequest request,
+            @AuthenticationPrincipal LoginMember loginMember) {
+        return ResponseEntity.ok(combinationService.update(combinationId, request));
     }
 }
