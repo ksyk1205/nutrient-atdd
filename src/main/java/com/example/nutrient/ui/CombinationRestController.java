@@ -36,4 +36,12 @@ public class CombinationRestController {
             @AuthenticationPrincipal LoginMember loginMember) {
         return ResponseEntity.ok(combinationService.update(combinationId, request));
     }
+
+    @DeleteMapping("/{combinationId}")
+    public ResponseEntity<Void> update(
+            @PathVariable UUID combinationId,
+            @AuthenticationPrincipal LoginMember loginMember) {
+        combinationService.delete(loginMember.getId(), combinationId);
+        return ResponseEntity.noContent().build();
+    }
 }
