@@ -25,5 +25,7 @@ public class CategoryAcceptanceTest extends AcceptanceTest {
         ExtractableResponse<Response> updateParentResponse = 카테고리_수정_요청(비타민D, "비타민C", 1);
         카테고리_수정됨(updateParentResponse.statusCode());
 
+        ExtractableResponse<Response> deleteParentResponse = 카테고리_삭제_요청(비타민D);
+        카테고리_삭제됨(deleteParentResponse.statusCode());
     }
 }
