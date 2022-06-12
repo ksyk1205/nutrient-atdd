@@ -9,9 +9,11 @@ import org.springframework.http.MediaType;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.http.HttpStatus.CREATED;
+import static org.springframework.http.HttpStatus.OK;
 
 public class CategorySteps {
     private static final String ENDPOINT = "/api/categories";
@@ -64,14 +66,27 @@ public class CategorySteps {
     }
 
     @When("카테고리 수정 요청")
-    public void 카테고리_수정_요청() {
-        // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
+    public static ExtractableResponse<Response> 카테고리_수정_요청(UUID id, String name, int depth) {
+        Map<String, Object> updateParams = getCategoryUpdateParams(name, depth);
+
+        return RestAssured.given().log().all()
+                .body(updateParams)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .accept(MediaType.APPLICATION_JSON_VALUE)
+                .when().put(ENDPOINT+"/{id}",id)
+                .then().log().all().extract();
     }
+
+    private static Map<String, Object> getCategoryUpdateParams(String name, int depth) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("name", name);
+        params.put("depth", depth);
+        return params;
+    }
+
     @Then("카테고리 수정됨")
-    public void 카테고리_수정됨() {
-        // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
+    public static void 카테고리_수정됨(int statusCode) {
+        assertThat(statusCode).isEqualTo(OK.value());
     }
     @When("카테고리 삭제 요청")
     public void 카테고리_삭제_요청() {

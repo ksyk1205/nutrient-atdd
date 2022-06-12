@@ -16,7 +16,7 @@ public class CategoryCreateResponse {
     private String name;
     private int depth;
 
-    public static CategoryCreateResponse create(Category category) {
+    public static CategoryCreateResponse of(Category category) {
         CategoryCreateResponse response = new CategoryCreateResponse(category.getId(),
                 category.getTitle().getName(),
                 category.getContent().getDepth());
