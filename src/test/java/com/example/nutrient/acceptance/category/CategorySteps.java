@@ -1,5 +1,6 @@
 package com.example.nutrient.acceptance.category;
 
+import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import io.restassured.RestAssured;
@@ -17,6 +18,12 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 public class CategorySteps {
     private static final String ENDPOINT = "/api/categories";
+
+    @Given("카테고리 생성 되어있음")
+    public static UUID 카테고리_생성_되어있음(String name){
+        return 카테고리_생성_요청(name).body().jsonPath().getUUID("id");
+
+    }
 
     @When("카테고리 생성 요청")
     public static ExtractableResponse<Response> 카테고리_생성_요청(String name) {
@@ -101,6 +108,20 @@ public class CategorySteps {
 
     @Then("카테고리 삭제됨")
     public static void 카테고리_삭제됨(int statusCode) {
+        assertThat(statusCode).isEqualTo(OK.value());
+    }
+
+    @When("카테고리 조회")
+    public static ExtractableResponse<Response> 카테고리_조회() {
+        return RestAssured.given().log().all()
+                .contentType(APPLICATION_JSON_VALUE)
+                .accept(APPLICATION_JSON_VALUE)
+                .when().put(ENDPOINT)
+                .then().log().all().extract();
+    }
+
+    @Then("카테고리 조회됨")
+    public static void 카테고리_조회됨(int statusCode) {
         assertThat(statusCode).isEqualTo(OK.value());
     }
 
