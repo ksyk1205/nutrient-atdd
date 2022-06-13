@@ -4,6 +4,7 @@ import static javax.persistence.FetchType.LAZY;
 import static lombok.AccessLevel.PRIVATE;
 import static lombok.AccessLevel.PROTECTED;
 
+import java.time.LocalDate;
 import java.util.UUID;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
@@ -61,5 +62,37 @@ public class Supplement extends BaseTimeEntity implements Persistable {
         if(this.category.getId() != category.getId()){
             this.category = category;
         }
+    }
+
+    public String getName(){
+        return title.getName();
+    }
+
+    public String getSerialNumber() {
+        return content.getSerialNumber();
+    }
+
+    public LocalDate getPermitDate() {
+        return content.getPermitDate();
+    }
+
+    public String getExpirationDate() {
+        return content.getExpirationDate();
+    }
+
+    public String getIntake() {
+        return content.getIntake();
+    }
+
+    public String getMainFunctional() {
+        return content.getMainFunctional();
+    }
+
+    public String getPrecautions() {
+        return content.getPrecautions();
+    }
+
+    public String getStorageWay() {
+        return content.getStorageWay();
     }
 }

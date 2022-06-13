@@ -26,18 +26,16 @@ public class SupplementUpdateResponse {
     private CategoryResponse category;
 
     public static SupplementUpdateResponse of(Supplement supplement) {
-        SupplementTitle title = supplement.getTitle();
-        SupplementContent content = supplement.getContent();
         return new SupplementUpdateResponse(
             supplement.getId(),
-            title.getName(),
-            content.getSerialNumber(),
-            content.getPermitDate(),
-            content.getExpirationDate(),
-            content.getIntake(),
-            content.getMainFunctional(),
-            content.getPrecautions(),
-            content.getStorageWay(),
+            supplement.getName(),
+            supplement.getSerialNumber(),
+            supplement.getPermitDate(),
+            supplement.getExpirationDate(),
+            supplement.getIntake(),
+            supplement.getMainFunctional(),
+            supplement.getPrecautions(),
+            supplement.getStorageWay(),
             new SupplementUpdateResponse.CategoryResponse(supplement.getCategory().getId(), supplement.getCategory().getTitle().getName())
         );
     }

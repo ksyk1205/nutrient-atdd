@@ -60,4 +60,22 @@ public class Combination {
     public List<CombinationLineItem> getCombinationLineItems() {
         return combinationLineItems.getCombinationLineItems();
     }
+
+
+    public void changeTitle(CombinationTitle title) {
+        this.title = title;
+    }
+
+    public void changeContent(CombinationContent content) {
+        this.content = content;
+    }
+
+    public void changeRecommendedTarget(Gender gender, HealthStatus healthStatus) {
+        this.recommendedGender = gender;
+        this.healthStatus = healthStatus;
+    }
+
+    public void changeCombinationLineItems(CombinationLineItems combinationLineItems) {
+        this.combinationLineItems = combinationLineItems;
+    }
 }

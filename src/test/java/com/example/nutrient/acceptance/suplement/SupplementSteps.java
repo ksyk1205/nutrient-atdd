@@ -14,6 +14,7 @@ import io.cucumber.java.en.When;
 import io.restassured.RestAssured;
 import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;
+import io.restassured.response.ResponseBodyExtractionOptions;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -81,19 +82,18 @@ public class SupplementSteps {
     }
 
     @When("영양제 수정 요청")
-    public static ExtractableResponse<Response> 영양제_수정_요청(SupplementUpdateRequest supplementUpdateRequest) {
+    public static ExtractableResponse<Response> 영양제_수정_요청(UUID id,SupplementUpdateRequest supplementUpdateRequest) {
         Map<String, Object> updateParams = createSupplementUpdateParams(supplementUpdateRequest);
         return RestAssured.given().log().all()
             .body(updateParams)
             .contentType(APPLICATION_JSON_VALUE)
             .accept(APPLICATION_JSON_VALUE)
-            .when().put(ENDPOINT)
+            .when().put(ENDPOINT + "/{id}", id)
             .then().log().all().extract();
     }
 
     private static Map<String, Object> createSupplementUpdateParams(SupplementUpdateRequest supplementUpdateRequest) {
         Map<String, Object> params = new HashMap<>();
-        params.put("id", supplementUpdateRequest.getId());
         params.put("name", supplementUpdateRequest.getName());
         params.put("serialNumber", supplementUpdateRequest.getSerialNumber());
         params.put("permitDate", supplementUpdateRequest.getPermitDate());
@@ -112,16 +112,27 @@ public class SupplementSteps {
     }
 
     @When("영양제 삭제 요청")
-    public static void 영양제_삭제_요청(UUID uuid) {
-
-        throw new io.cucumber.java.PendingException();
+    public static ExtractableResponse<Response> 영양제_삭제_요청(UUID uuid) {
+        return RestAssured.given().log().all()
+            .accept(APPLICATION_JSON_VALUE)
+            .when().delete(ENDPOINT + "/{id}", uuid)
+            .then().log().all().extract();
     }
 
     @Then("영양제 삭제됨")
-    public void 영양제_삭제됨() {
-        // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
+    public static void 영양제_삭제됨(int statusCode) {
+        assertThat(statusCode).isEqualTo(OK.value());
     }
 
-
+    @When("영양제 상세 조회")
+    public static ExtractableResponse<Response> 영양제_상세_조회(UUID id) {
+        return RestAssured.given().log().all()
+            .accept(APPLICATION_JSON_VALUE)
+            .when().get(ENDPOINT+ "/{id}", id)
+            .then().log().all().extract();
+    }
+    @Then("영양제 상세 조회됨")
+    public static void 영양제_상세_조회됨(int statusCode) {
+        assertThat(statusCode).isEqualTo(OK.value());
+    }
 }

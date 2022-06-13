@@ -1,20 +1,22 @@
 package com.example.nutrient.application.dto.supplement;
 
+import com.example.nutrient.application.dto.supplement.SupplementUpdateResponse.CategoryResponse;
+import com.example.nutrient.domain.Category;
 import com.example.nutrient.domain.Supplement;
-import com.example.nutrient.domain.SupplementContent;
-import com.example.nutrient.domain.SupplementTitle;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
-import javax.validation.constraints.NotEmpty;
+import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@Data
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class SupplementCreateResponse {
-
+public class SupplementSearchResponse {
     private UUID id;
     private String name;
     private String serialNumber;
@@ -24,10 +26,13 @@ public class SupplementCreateResponse {
     private String mainFunctional;
     private String precautions;
     private String storageWay;
+
+    private List<LowestPriceResponse> lowestPrices = new ArrayList<>();
+
     private CategoryResponse category;
 
-    public static SupplementCreateResponse of(Supplement supplement) {
-        return new SupplementCreateResponse(
+    public static SupplementSearchResponse of(Supplement supplement, List<LowestPriceResponse> lowestPrices) {
+        return new SupplementSearchResponse(
             supplement.getId(),
             supplement.getName(),
             supplement.getSerialNumber(),
@@ -37,18 +42,21 @@ public class SupplementCreateResponse {
             supplement.getMainFunctional(),
             supplement.getPrecautions(),
             supplement.getStorageWay(),
-            new CategoryResponse(supplement.getCategory().getId(), supplement.getCategory().getTitle().getName())
+            lowestPrices,
+            CategoryResponse.of(supplement.getCategory())
         );
     }
 
-    @Data
+    @Getter
     @NoArgsConstructor
     @AllArgsConstructor
     public static class CategoryResponse {
-
         private UUID id;
         private String name;
+        public static CategoryResponse of(Category category) {
+            return new CategoryResponse(
+                category.getId(), category.getTitle().getName()
+            );
+        }
     }
-
 }
-
