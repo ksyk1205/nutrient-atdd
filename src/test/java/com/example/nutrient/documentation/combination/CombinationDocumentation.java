@@ -74,8 +74,7 @@ class CombinationDocumentation extends Documentation {
     @Test
     void remove() throws Exception {
         mockMvc.perform(delete(ENDPOINT + "/{combinationId}", UUID.randomUUID().toString())
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(UPDATE_REQUEST)))
+                        .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNoContent())
                 .andDo(print())
                 .andDo(document("combination-delete",
