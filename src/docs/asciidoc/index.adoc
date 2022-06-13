@@ -1,4 +1,4 @@
-= Subway Application API Document
+= Supplement Application API Document
 :doctype: book
 :icons: font
 :source-highlighter: highlightjs
@@ -7,13 +7,5 @@
 :sectlinks:
 
 [[path]]
-== 영양제 조합
 
-=== 조합 생성
-operation::combination-create[snippets='http-request,request-fields,http-response,response-fields']
-
-=== 조합 수정
-operation::combination-update[snippets='http-request,path-parameters,request-fields,http-response,response-fields']
-
-=== 조합 삭제
-operation::combination-delete[snippets='http-request,path-parameters,http-response']
+include::combination.adoc[]
