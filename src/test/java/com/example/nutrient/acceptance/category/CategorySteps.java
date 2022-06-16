@@ -1,11 +1,11 @@
 package com.example.nutrient.acceptance.category;
 
+import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import io.restassured.RestAssured;
 import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;
-import org.springframework.http.MediaType;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -14,9 +14,16 @@ import java.util.UUID;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.HttpStatus.OK;
+import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 public class CategorySteps {
     private static final String ENDPOINT = "/api/categories";
+
+    @Given("카테고리 생성 되어있음")
+    public static UUID 카테고리_생성_되어있음(String name){
+        return 카테고리_생성_요청(name).body().jsonPath().getUUID("id");
+
+    }
 
     @When("카테고리 생성 요청")
     public static ExtractableResponse<Response> 카테고리_생성_요청(String name) {
@@ -24,16 +31,16 @@ public class CategorySteps {
 
         return RestAssured.given().log().all()
                 .body(createParams)
-                .contentType(MediaType.APPLICATION_JSON_VALUE)
-                .accept(MediaType.APPLICATION_JSON_VALUE)
+                .contentType(APPLICATION_JSON_VALUE)
+                .accept(APPLICATION_JSON_VALUE)
                 .when().post(ENDPOINT)
                 .then().log().all().extract();
     }
 
     private static Map<String, Object> getCategoryCreateParams(String name) {
-            Map<String, Object> params = new HashMap<>();
-            params.put("name", name);
-            return params;
+        Map<String, Object> params = new HashMap<>();
+        params.put("name", name);
+        return params;
     }
 
     @Then("카테고리 생성됨")
@@ -43,16 +50,17 @@ public class CategorySteps {
 
     @When("카테고리 자식 생성 요청")
     public static ExtractableResponse<Response> 카테고리_자식_생성_요청(String name, Integer depth) {
-        Map<String, Object> createParams = getCategoryCreateParams(name,depth);
+        Map<String, Object> createParams = getCategoryCreateParams(name, depth);
 
         return RestAssured.given().log().all()
                 .body(createParams)
-                .contentType(MediaType.APPLICATION_JSON_VALUE)
-                .accept(MediaType.APPLICATION_JSON_VALUE)
+                .contentType(APPLICATION_JSON_VALUE)
+                .accept(APPLICATION_JSON_VALUE)
                 .when().post(ENDPOINT)
                 .then().log().all().extract();
 
     }
+
     private static Map<String, Object> getCategoryCreateParams(String name, Integer depth) {
         Map<String, Object> params = new HashMap<>();
         params.put("name", name);
@@ -71,9 +79,9 @@ public class CategorySteps {
 
         return RestAssured.given().log().all()
                 .body(updateParams)
-                .contentType(MediaType.APPLICATION_JSON_VALUE)
-                .accept(MediaType.APPLICATION_JSON_VALUE)
-                .when().put(ENDPOINT+"/{id}",id)
+                .contentType(APPLICATION_JSON_VALUE)
+                .accept(APPLICATION_JSON_VALUE)
+                .when().put(ENDPOINT + "/{id}", id)
                 .then().log().all().extract();
     }
 
@@ -88,17 +96,33 @@ public class CategorySteps {
     public static void 카테고리_수정됨(int statusCode) {
         assertThat(statusCode).isEqualTo(OK.value());
     }
+
     @When("카테고리 삭제 요청")
-    public void 카테고리_삭제_요청() {
-        // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
+    public static ExtractableResponse<Response> 카테고리_삭제_요청(UUID id) {
+        return RestAssured.given().log().all()
+                .accept(APPLICATION_JSON_VALUE)
+                .when().delete(ENDPOINT + "{id}", id)
+                .then().log().all().extract();
+
     }
+
     @Then("카테고리 삭제됨")
-    public void 카테고리_삭제됨() {
-        // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
+    public static void 카테고리_삭제됨(int statusCode) {
+        assertThat(statusCode).isEqualTo(OK.value());
     }
 
+    @When("카테고리 조회")
+    public static ExtractableResponse<Response> 카테고리_조회() {
+        return RestAssured.given().log().all()
+                .contentType(APPLICATION_JSON_VALUE)
+                .accept(APPLICATION_JSON_VALUE)
+                .when().put(ENDPOINT)
+                .then().log().all().extract();
+    }
 
+    @Then("카테고리 조회됨")
+    public static void 카테고리_조회됨(int statusCode) {
+        assertThat(statusCode).isEqualTo(OK.value());
+    }
 
 }
