@@ -9,3 +9,5 @@
 [[path]]
 
 include::combination.adoc[]
+
+include::categories.adoc[]

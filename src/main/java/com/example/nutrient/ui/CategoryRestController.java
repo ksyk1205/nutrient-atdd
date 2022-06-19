@@ -3,6 +3,7 @@ package com.example.nutrient.ui;
 import com.example.nutrient.application.CategoryService;
 import com.example.nutrient.application.dto.category.*;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -38,7 +39,7 @@ public class CategoryRestController {
             @PathVariable UUID id
     ){
         categoryService.delete(id);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.noContent().build();
     }
 
     @GetMapping()

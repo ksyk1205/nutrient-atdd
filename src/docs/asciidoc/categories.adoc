@@ -1,0 +1,16 @@
+== 카테고리
+
+=== 부모 카테고리 생성
+operation::category-parent-create[snippets='http-request,request-fields,http-response,response-fields']
+
+=== 자식 카테고리 생성
+operation::category-child-create[snippets='http-request,request-fields,http-response,response-fields']
+
+=== 카테고리 수정
+operation::category-update[snippets='path-parameters,http-request,request-fields,http-response,response-fields']
+
+=== 카테고리 조회
+operation::category-search[snippets='http-request,http-response,response-fields-beneath-[]']
+
+=== 카테고리 삭제
+operation::category-delete[snippets='path-parameters,http-request,http-response']
