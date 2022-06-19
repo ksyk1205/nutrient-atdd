@@ -14,6 +14,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.springframework.http.HttpStatus.*;
+
 public class CombinationSteps {
     private static final String ENDPOINT = "/api/combinations";
 
@@ -51,9 +54,8 @@ public class CombinationSteps {
     }
 
     @Then("영양제 조합 생성됨")
-    public static void 영양제_조합_생성됨() {
-        // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
+    public static void 영양제_조합_생성됨(ExtractableResponse<Response> response) {
+        assertThat(response.statusCode()).isEqualTo(CREATED.value());
     }
 
     @When("영양제 조합 수정 요청")
@@ -80,20 +82,22 @@ public class CombinationSteps {
     }
 
     @Then("영양제 조합 수정됨")
-    public static void 영양제_조합_수정됨() {
-        // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
+    public static void 영양제_조합_수정됨(ExtractableResponse<Response> response) {
+        assertThat(response.statusCode()).isEqualTo(OK.value());
     }
 
     @When("영양제 조합 삭제 요청")
-    public static void 영양제_조합_삭제_요청() {
-        // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
+    public static ExtractableResponse<Response> 영양제_조합_삭제_요청(String accessToken, ExtractableResponse<Response> createResponse) {
+        String id = createResponse.jsonPath().getString("id");
+        return RestAssured
+                .given().log().all()
+                .auth().oauth2(accessToken)
+                .when().delete(ENDPOINT, id)
+                .then().log().all().extract();
     }
 
     @Then("영양제 조합 삭제됨")
-    public static void 영양제_조합_삭제됨() {
-        // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
+    public static void 영양제_조합_삭제됨(ExtractableResponse<Response> response) {
+        assertThat(response.statusCode()).isEqualTo(NO_CONTENT.value());
     }
 }

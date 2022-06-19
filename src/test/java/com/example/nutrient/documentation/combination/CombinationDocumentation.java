@@ -22,8 +22,7 @@ import static com.example.nutrient.documentation.combination.CombinationDocument
 import static org.mockito.BDDMockito.any;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
-import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
-import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.put;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -68,7 +67,18 @@ class CombinationDocumentation extends Documentation {
                 .andDo(document("combination-update",
                         getUpdateRequestPathParams(),
                         getUpdateRequestFields(),
-                        getCreateResponseFields())
+                        getUpdateResponseFields())
+                );
+    }
+
+    @Test
+    void remove() throws Exception {
+        mockMvc.perform(delete(ENDPOINT + "/{combinationId}", UUID.randomUUID().toString())
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNoContent())
+                .andDo(print())
+                .andDo(document("combination-delete",
+                        getDeleteRequestPathParams())
                 );
     }
 }

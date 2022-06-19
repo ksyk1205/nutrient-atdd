@@ -1,5 +1,6 @@
 package com.example.nutrient.documentation.combination;
 
+import org.springframework.restdocs.operation.preprocess.OperationRequestPreprocessor;
 import org.springframework.restdocs.payload.RequestFieldsSnippet;
 import org.springframework.restdocs.request.PathParametersSnippet;
 import org.springframework.restdocs.snippet.Snippet;
@@ -57,6 +58,12 @@ public class CombinationDocumentationSteps {
                 fieldWithPath("healthStatusResponse").description("건강 상태"),
                 fieldWithPath("healthStatusResponse.id").description("건강 상태 ID"),
                 fieldWithPath("healthStatusResponse.name").description("건강 상태 이름")
+        );
+    }
+
+    public static PathParametersSnippet getDeleteRequestPathParams() {
+        return pathParameters(
+                parameterWithName("combinationId").description("조합 ID")
         );
     }
 }
