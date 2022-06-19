@@ -9,4 +9,6 @@ public interface CombinationRepository {
     Combination save(Combination combination);
 
     Optional<Combination> findById(UUID id);
+
+    void deleteById(UUID id);
 }

@@ -35,4 +35,12 @@ public class CategoryRestController {
         return ResponseEntity.ok().body(response);
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(
+            @PathVariable UUID id
+    ){
+        categoryService.delete(id);
+        return ResponseEntity.ok().build();
+    }
+
 }

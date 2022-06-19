@@ -66,4 +66,12 @@ public class CombinationService {
         combination.changeCombinationLineItems(combinationLineItems);
         combination.changeRecommendedTarget(request.getRecommendedGender(), healthStatus);
     }
+
+    public void delete(UUID memberId, UUID combinationId) {
+        // TODO: add isNotMine
+//        if (isNotMine(memberId, combinationId)) {
+//            throw new IllegalArgumentException();
+//        }
+        combinationRepository.deleteById(combinationId);
+    }
 }

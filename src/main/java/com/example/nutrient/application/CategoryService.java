@@ -40,7 +40,12 @@ public class CategoryService {
         return CategoryUpdateResponse.of(category);
     }
 
+    public void delete(UUID id) {
+        categoryRepository.deleteById(id);
+    }
+
     private Category getCategoryById(UUID id) {
         return categoryRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("수정하려는 카테고리의 id가 존재하지 않습니다."));
     }
+
 }

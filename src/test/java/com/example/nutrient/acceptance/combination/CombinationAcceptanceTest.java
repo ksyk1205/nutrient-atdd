@@ -63,8 +63,14 @@ class CombinationAcceptanceTest extends AcceptanceTest {
     void manage() {
         ExtractableResponse<Response> createResponse =
                 영양제_조합_생성_요청(사용자, "무기력증에 추천", "<p>일상이 무기력할 때 추천하는 영양제 조합입니다.</p>", 영양제_목록, 무기력);
+        영양제_조합_생성됨(createResponse);
 
         ExtractableResponse<Response> updateResponse =
                 영양제_조합_수정_요청(사용자, createResponse, "무기력증에 추천하는 조합", "<h1>일상이 무기력할 때 추천하는 영양제 조합입니다.</h1>", 영양제_목록, 무기력);
+        영양제_조합_수정됨(updateResponse);
+
+        ExtractableResponse<Response> deleteResponse =
+                영양제_조합_삭제_요청(사용자, createResponse);
+        영양제_조합_삭제됨(deleteResponse);
     }
 }
