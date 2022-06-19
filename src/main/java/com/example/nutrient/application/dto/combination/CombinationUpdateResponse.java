@@ -11,7 +11,7 @@ import java.util.UUID;
 
 @Getter
 @AllArgsConstructor
-public class CombinationCreateResponse {
+public class CombinationUpdateResponse {
     private UUID id;
     private String title;
     private String content;
@@ -19,8 +19,8 @@ public class CombinationCreateResponse {
     private Gender recommendedGender;
     private HealthStatusResponse healthStatusResponse;
 
-    public static CombinationCreateResponse of(Combination combination) {
-        return new CombinationCreateResponse(
+    public static CombinationUpdateResponse of(Combination combination) {
+        return new CombinationUpdateResponse(
                 combination.getId(),
                 combination.getTitle(),
                 combination.getContent(),

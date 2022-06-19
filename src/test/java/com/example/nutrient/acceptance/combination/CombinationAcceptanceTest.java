@@ -13,6 +13,7 @@ import java.util.List;
 import static com.example.nutrient.acceptance.auth.AuthSteps.로그인_되어_있음;
 import static com.example.nutrient.acceptance.auth.MemberSteps.*;
 import static com.example.nutrient.acceptance.combination.CombinationSteps.*;
+import static com.example.nutrient.acceptance.combination.HealthStatusSteps.건강_상태_생성되어있음;
 
 @DisplayName("영양제 조합 관리")
 class CombinationAcceptanceTest extends AcceptanceTest {
@@ -61,6 +62,15 @@ class CombinationAcceptanceTest extends AcceptanceTest {
     @Test
     void manage() {
         ExtractableResponse<Response> createResponse =
-                영양제_조합_생성_요청(사용자, "무기력증에 추천", "<p>일상이 무기력할 때 추천하는 영양제 조합입니다.<p>", 영양제_목록, 무기력);
+                영양제_조합_생성_요청(사용자, "무기력증에 추천", "<p>일상이 무기력할 때 추천하는 영양제 조합입니다.</p>", 영양제_목록, 무기력);
+        영양제_조합_생성됨(createResponse);
+
+        ExtractableResponse<Response> updateResponse =
+                영양제_조합_수정_요청(사용자, createResponse, "무기력증에 추천하는 조합", "<h1>일상이 무기력할 때 추천하는 영양제 조합입니다.</h1>", 영양제_목록, 무기력);
+        영양제_조합_수정됨(updateResponse);
+
+        ExtractableResponse<Response> deleteResponse =
+                영양제_조합_삭제_요청(사용자, createResponse);
+        영양제_조합_삭제됨(deleteResponse);
     }
 }

@@ -14,6 +14,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.springframework.http.HttpStatus.*;
+
 public class CombinationSteps {
     private static final String ENDPOINT = "/api/combinations";
 
@@ -24,11 +27,7 @@ public class CombinationSteps {
 
     @Given("영양제 생성되어있음")
     public static String 영양제_생성되어있음(String name, String categoryId) {
-        return UUID.randomUUID().toString();
-    }
-
-    @Given("건강 상태 생성되어있음")
-    public static String 건강_상태_생성되어있음(String name) {
+        // TODO: Fixture 사용
         return UUID.randomUUID().toString();
     }
 
@@ -55,32 +54,50 @@ public class CombinationSteps {
     }
 
     @Then("영양제 조합 생성됨")
-    public static void 영양제_조합_생성됨() {
-        // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
+    public static void 영양제_조합_생성됨(ExtractableResponse<Response> response) {
+        assertThat(response.statusCode()).isEqualTo(CREATED.value());
     }
 
     @When("영양제 조합 수정 요청")
-    public static void 영양제_조합_수정_요청() {
-        // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
+    public static ExtractableResponse<Response> 영양제_조합_수정_요청(String accessToken, ExtractableResponse<Response> response, String title, String content, List<String> supplementIds, String healthStatusId) {
+        Map<String, Object> updateParams = createCombinationUpdateParams(title, content, supplementIds, Gender.ALL, healthStatusId);
+        return RestAssured.given().log().all()
+                .auth().oauth2(accessToken)
+                .queryParam("combinationId", response.jsonPath().getString("id"))
+                .contentType(ContentType.JSON)
+                .body(updateParams)
+                .when().put(ENDPOINT)
+                .then().log().all().extract();
+    }
+
+    private static Map<String, Object> createCombinationUpdateParams(
+            String title, String content, List<String> supplementIds, Gender recommendedGender, String healthStatusId) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("title", title);
+        params.put("content", content);
+        params.put("supplementIds", supplementIds);
+        params.put("recommendedGender", recommendedGender);
+        params.put("healthStatusId", healthStatusId);
+        return params;
     }
 
     @Then("영양제 조합 수정됨")
-    public static void 영양제_조합_수정됨() {
-        // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
+    public static void 영양제_조합_수정됨(ExtractableResponse<Response> response) {
+        assertThat(response.statusCode()).isEqualTo(OK.value());
     }
 
     @When("영양제 조합 삭제 요청")
-    public static void 영양제_조합_삭제_요청() {
-        // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
+    public static ExtractableResponse<Response> 영양제_조합_삭제_요청(String accessToken, ExtractableResponse<Response> createResponse) {
+        String id = createResponse.jsonPath().getString("id");
+        return RestAssured
+                .given().log().all()
+                .auth().oauth2(accessToken)
+                .when().delete(ENDPOINT, id)
+                .then().log().all().extract();
     }
 
     @Then("영양제 조합 삭제됨")
-    public static void 영양제_조합_삭제됨() {
-        // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
+    public static void 영양제_조합_삭제됨(ExtractableResponse<Response> response) {
+        assertThat(response.statusCode()).isEqualTo(NO_CONTENT.value());
     }
 }

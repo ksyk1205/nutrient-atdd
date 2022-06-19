@@ -1,4 +1,4 @@
-= Subway Application API Document
+= Supplement Application API Document
 :doctype: book
 :icons: font
 :source-highlighter: highlightjs
@@ -7,8 +7,5 @@
 :sectlinks:
 
 [[path]]
-== 지하철 경로
 
-=== 경로 조회
-
-operation::path[snippets='http-request,request-parameters,http-response,response-fields']
+include::combination.adoc[]
