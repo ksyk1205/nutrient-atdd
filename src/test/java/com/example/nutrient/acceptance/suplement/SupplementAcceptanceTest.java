@@ -100,9 +100,8 @@ public class SupplementAcceptanceTest extends AcceptanceTest {
     @Test
     @DisplayName("영양제를 상세조회한다")
     public void search() {
-        ExtractableResponse<Response> 김화란_클로렐라 = 영양제_생성되어있음("김화란 클로렐라", 클로렐라);
-        UUID id = 김화란_클로렐라.response().jsonPath().getUUID("id");
-        ExtractableResponse<Response> 김화란_클로렐라_상세_정보 = 영양제_상세_조회(id);
+        UUID 김화란_클로렐라 = 영양제_생성되어있음("김화란 클로렐라", 클로렐라);
+        ExtractableResponse<Response> 김화란_클로렐라_상세_정보 = 영양제_상세_조회(김화란_클로렐라);
         영양제_상세_조회됨(김화란_클로렐라_상세_정보.statusCode());
     }
 
