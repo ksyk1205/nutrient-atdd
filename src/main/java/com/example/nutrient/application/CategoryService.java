@@ -1,9 +1,6 @@
 package com.example.nutrient.application;
 
-import com.example.nutrient.application.dto.category.CategoryCreateRequest;
-import com.example.nutrient.application.dto.category.CategoryCreateResponse;
-import com.example.nutrient.application.dto.category.CategoryUpdateRequest;
-import com.example.nutrient.application.dto.category.CategoryUpdateResponse;
+import com.example.nutrient.application.dto.category.*;
 import com.example.nutrient.application.dto.supplement.SupplementCreateResponse;
 import com.example.nutrient.domain.*;
 import com.example.nutrient.domain.repository.CategoryRepository;
@@ -12,7 +9,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -44,8 +43,11 @@ public class CategoryService {
         categoryRepository.deleteById(id);
     }
 
+    public List<CategorySearchResponse> search() {
+        return categoryRepository.findAll().stream().map(CategorySearchResponse::of).collect(Collectors.toList());
+    }
+
     private Category getCategoryById(UUID id) {
         return categoryRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("수정하려는 카테고리의 id가 존재하지 않습니다."));
     }
-
 }

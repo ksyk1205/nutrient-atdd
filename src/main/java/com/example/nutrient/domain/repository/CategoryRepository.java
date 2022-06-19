@@ -3,6 +3,7 @@ package com.example.nutrient.domain.repository;
 import com.example.nutrient.domain.Category;
 import com.example.nutrient.domain.Supplement;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -12,4 +13,6 @@ public interface CategoryRepository {
     Category save(Category category);
 
     void deleteById(UUID id);
+
+    List<Category> findAll();
 }
