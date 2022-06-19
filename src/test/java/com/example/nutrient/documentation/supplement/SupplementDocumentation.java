@@ -2,12 +2,16 @@ package com.example.nutrient.documentation.supplement;
 
 import static com.example.nutrient.documentation.supplement.SupplementDocumentationFixture.CREATE_REQUEST;
 import static com.example.nutrient.documentation.supplement.SupplementDocumentationFixture.CREATE_RESPONSE;
+import static com.example.nutrient.documentation.supplement.SupplementDocumentationFixture.SEARCH_BY_PAGE_RESPONSE;
 import static com.example.nutrient.documentation.supplement.SupplementDocumentationFixture.SEARCH_RESPONSE;
 import static com.example.nutrient.documentation.supplement.SupplementDocumentationFixture.UPDATE_REQUEST;
 import static com.example.nutrient.documentation.supplement.SupplementDocumentationFixture.UPDATE_RESPONSE;
+import static com.example.nutrient.documentation.supplement.SupplementDocumentationFixture.page;
 import static com.example.nutrient.documentation.supplement.SupplementDocumentationSteps.getCreateRequestFields;
 import static com.example.nutrient.documentation.supplement.SupplementDocumentationSteps.getCreateResponseFields;
 import static com.example.nutrient.documentation.supplement.SupplementDocumentationSteps.getDeleteRequestPathParams;
+import static com.example.nutrient.documentation.supplement.SupplementDocumentationSteps.getSearchByPageRequestParams;
+import static com.example.nutrient.documentation.supplement.SupplementDocumentationSteps.getSearchByPageResponseFields;
 import static com.example.nutrient.documentation.supplement.SupplementDocumentationSteps.getSearchRequestPathParams;
 import static com.example.nutrient.documentation.supplement.SupplementDocumentationSteps.getSearchResponseFields;
 import static com.example.nutrient.documentation.supplement.SupplementDocumentationSteps.getUpdateRequestFields;
@@ -30,6 +34,7 @@ import com.example.nutrient.application.dto.supplement.SupplementUpdateRequest;
 import com.example.nutrient.documentation.Documentation;
 import com.example.nutrient.ui.SupplementController;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.util.Map;
 import java.util.UUID;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +42,11 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
+import org.springframework.restdocs.operation.preprocess.OperationRequestPreprocessor;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 
 @WebMvcTest(controllers = {SupplementController.class},
     excludeFilters = {
@@ -109,4 +118,28 @@ public class SupplementDocumentation extends Documentation {
             );
     }
 
+
+    @Test
+    void searchByPage() throws Exception {
+        given(supplementService.searchByPage(any(Pageable.class))).willReturn(SEARCH_BY_PAGE_RESPONSE);
+        MultiValueMap<String, String> searchParam = searchSupplementParams(page);
+        mockMvc.perform(get(ENDPOINT)
+                .accept(MediaType.APPLICATION_JSON)
+                .params(searchParam))
+            .andExpect(status().isOk())
+            .andDo(print())
+            .andDo(document("supplement-searchByPage",
+                getSearchByPageRequestParams(),
+                getSearchByPageResponseFields())
+            );
+    }
+
+
+
+    private static MultiValueMap<String, String> searchSupplementParams(Pageable page) {
+        MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
+        map.add("page", String.valueOf(page.getPageNumber()));
+        map.add("size", String.valueOf(page.getPageSize()));
+        return map;
+    }
 }

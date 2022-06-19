@@ -6,10 +6,15 @@ import com.example.nutrient.application.dto.supplement.SupplementCreateResponse;
 import com.example.nutrient.application.dto.supplement.SupplementSearchResponse;
 import com.example.nutrient.application.dto.supplement.SupplementUpdateRequest;
 import com.example.nutrient.application.dto.supplement.SupplementUpdateResponse;
+import com.example.nutrient.application.dto.supplement.SupplementsResponse;
 import java.net.URI;
+import java.util.List;
 import java.util.UUID;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,6 +36,13 @@ public class SupplementController {
     public ResponseEntity<SupplementSearchResponse> search(
         @PathVariable UUID id){
         SupplementSearchResponse response = supplementService.search(id);
+        return ResponseEntity.ok().body(response);
+    }
+
+    @GetMapping("")
+    public ResponseEntity<Page<SupplementsResponse>> searchByPage(
+        final @PageableDefault(size = 10, page = 0) Pageable page){
+        Page<SupplementsResponse> response = supplementService.searchByPage(page);
         return ResponseEntity.ok().body(response);
     }
 

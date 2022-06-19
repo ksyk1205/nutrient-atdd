@@ -18,6 +18,10 @@ import io.restassured.response.ResponseBodyExtractionOptions;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 
 public class SupplementSteps {
 
@@ -128,6 +132,33 @@ public class SupplementSteps {
     }
     @Then("영양제 상세 조회됨")
     public static void 영양제_상세_조회됨(int statusCode) {
+        assertThat(statusCode).isEqualTo(OK.value());
+    }
+
+    @Given("조회할 페이지가 설정되어 있음")
+    public static Pageable 조회할_페이지가_설정_되어_있음() {
+        return PageRequest.of(0, 10);
+    }
+
+    @When("영양제 페이지별 조회")
+    public static ExtractableResponse<Response> 영양제_페이지별_조회(Pageable page) {
+        MultiValueMap<String, String> searchParam = searchSupplementParams(page);
+        return RestAssured.given().log().all()
+            .accept(APPLICATION_JSON_VALUE)
+            .params(searchParam)
+            .when().get(ENDPOINT)
+            .then().log().all().extract();
+    }
+
+    private static MultiValueMap<String, String> searchSupplementParams(Pageable page) {
+        MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
+        map.add("page", String.valueOf(page.getPageNumber()));
+        map.add("size", String.valueOf(page.getPageSize()));
+        return map;
+    }
+
+    @Then("영양제 페이지별 조회됨")
+    public void 영양제_페이지별_조회됨(int statusCode) {
         assertThat(statusCode).isEqualTo(OK.value());
     }
 }
