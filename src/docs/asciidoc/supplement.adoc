@@ -11,3 +11,6 @@ operation::supplement-delete[snippets='http-request,path-parameters,http-respons
 
 === 영양제 조회
 operation::supplement-search[snippets='http-request,path-parameters,http-response,response-fields']
+
+=== 영양제 모두 조회(페이지)
+operation::supplement-searchByPage[snippets='http-request,request-parameters,http-response,response-fields']
