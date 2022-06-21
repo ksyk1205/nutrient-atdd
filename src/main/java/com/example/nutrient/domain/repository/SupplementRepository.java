@@ -5,6 +5,8 @@ import com.example.nutrient.domain.Supplement;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 public interface SupplementRepository {
 
@@ -13,6 +15,8 @@ public interface SupplementRepository {
     Optional<Supplement> findById(UUID id);
 
     List<Supplement> findAllById(Iterable<UUID> ids);
+
+    Page<Supplement> findAllWithCategory(Pageable page);
 
     void deleteById(UUID id);
 
