@@ -18,6 +18,10 @@ import io.restassured.response.ResponseBodyExtractionOptions;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 
 public class SupplementSteps {
 
@@ -28,7 +32,7 @@ public class SupplementSteps {
 
     }
     @Given("영양제 생성되어있음")
-    public static ExtractableResponse<Response> 영양제_생성되어있음(String name, UUID categoryId) {
+    public static UUID 영양제_생성되어있음(String name, UUID categoryId) {
         SupplementCreateRequest tempSupplementCreateRequest = new SupplementCreateRequest(name, "201100200015",
             "2011-12-09",
             "제조일로부터 24개월",
@@ -37,12 +41,7 @@ public class SupplementSteps {
             "[홍삼제품]의약품(당뇨치료제, 혈액항응고제) 복용 시 섭취에 주의 2) 특이체질등 알레르기 체질의 경우 제품성분을 확인 후 섭취하시기 바랍니다. 3) 15세 이하의 어린이는 상기 섭취량의 절반 정도를 섭취하시요. 4) 제품 개봉 또는 섭취시에 포장재로 인한 상처를 입을수 있으니주의 하십시오.",
             "직사광선을 피해 건조하고 서늘한 곳에서 보관한다.", categoryId);
         Map<String, Object> createParams = createSupplementCreateParams(tempSupplementCreateRequest);
-        return RestAssured.given().log().all()
-            .body(createParams)
-            .contentType(APPLICATION_JSON_VALUE)
-            .accept(APPLICATION_JSON_VALUE)
-            .when().post(ENDPOINT)
-            .then().log().all().extract();
+        return 영양제_생성_요청(tempSupplementCreateRequest).body().jsonPath().getUUID("id");
     }
 
 
@@ -133,6 +132,33 @@ public class SupplementSteps {
     }
     @Then("영양제 상세 조회됨")
     public static void 영양제_상세_조회됨(int statusCode) {
+        assertThat(statusCode).isEqualTo(OK.value());
+    }
+
+    @Given("조회할 페이지가 설정되어 있음")
+    public static Pageable 조회할_페이지가_설정_되어_있음() {
+        return PageRequest.of(0, 10);
+    }
+
+    @When("영양제 페이지별 조회")
+    public static ExtractableResponse<Response> 영양제_페이지별_조회(Pageable page) {
+        MultiValueMap<String, String> searchParam = searchSupplementParams(page);
+        return RestAssured.given().log().all()
+            .accept(APPLICATION_JSON_VALUE)
+            .params(searchParam)
+            .when().get(ENDPOINT)
+            .then().log().all().extract();
+    }
+
+    private static MultiValueMap<String, String> searchSupplementParams(Pageable page) {
+        MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
+        map.add("page", String.valueOf(page.getPageNumber()));
+        map.add("size", String.valueOf(page.getPageSize()));
+        return map;
+    }
+
+    @Then("영양제 페이지별 조회됨")
+    public void 영양제_페이지별_조회됨(int statusCode) {
         assertThat(statusCode).isEqualTo(OK.value());
     }
 }

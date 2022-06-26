@@ -11,3 +11,6 @@
 include::combination.adoc[]
 
 include::categories.adoc[]
+
+include::supplement.adoc[]
+

@@ -6,6 +6,7 @@ import com.example.nutrient.application.dto.supplement.SupplementCreateResponse;
 import com.example.nutrient.application.dto.supplement.SupplementSearchResponse;
 import com.example.nutrient.application.dto.supplement.SupplementUpdateRequest;
 import com.example.nutrient.application.dto.supplement.SupplementUpdateResponse;
+import com.example.nutrient.application.dto.supplement.SupplementsResponse;
 import com.example.nutrient.domain.Category;
 import com.example.nutrient.domain.Supplement;
 import com.example.nutrient.domain.SupplementContent;
@@ -14,7 +15,10 @@ import com.example.nutrient.domain.repository.CategoryRepository;
 import com.example.nutrient.domain.repository.SupplementRepository;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -32,6 +36,12 @@ public class SupplementService {
         Supplement supplement = getSupplementAndCategory(id);
         List<LowestPriceResponse> lowestPrices = lowestPriceService.getLowestPrices(supplement.getName());
         SupplementSearchResponse response = SupplementSearchResponse.of(supplement, lowestPrices);
+        return response;
+    }
+
+    public Page<SupplementsResponse> searchByPage(Pageable page) {
+        Page<Supplement> supplements = getSupplementsByCategories(page);
+        Page<SupplementsResponse> response = supplements.map(SupplementsResponse::of);
         return response;
     }
 
@@ -70,6 +80,9 @@ public class SupplementService {
             .orElseThrow(() -> new IllegalArgumentException("영양제가 없습니다."));
     }
 
+    private Page<Supplement> getSupplementsByCategories(Pageable page) {
+        return supplementRepository.findAllWithCategory(page);
+    }
     private Supplement getSupplement(UUID id) {
         return supplementRepository.findById(id)
             .orElseThrow(() -> new IllegalArgumentException("영양제가 없습니다."));
@@ -79,5 +92,6 @@ public class SupplementService {
         return categoryRepository.findById(categoryId)
             .orElseThrow(() -> new IllegalArgumentException("카테고리가 없습니다."));
     }
+
 
 }

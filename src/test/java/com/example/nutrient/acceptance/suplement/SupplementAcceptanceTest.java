@@ -9,6 +9,8 @@ import static com.example.nutrient.acceptance.suplement.SupplementSteps.영양�
 import static com.example.nutrient.acceptance.suplement.SupplementSteps.영양제_생성됨;
 import static com.example.nutrient.acceptance.suplement.SupplementSteps.영양제_수정_요청;
 import static com.example.nutrient.acceptance.suplement.SupplementSteps.영양제_수정됨;
+import static com.example.nutrient.acceptance.suplement.SupplementSteps.영양제_페이지별_조회;
+import static com.example.nutrient.acceptance.suplement.SupplementSteps.조회할_페이지가_설정_되어_있음;
 import static com.example.nutrient.acceptance.suplement.SupplementSteps.카테고리_생성되어_있음;
 
 import com.example.nutrient.acceptance.AcceptanceTest;
@@ -21,6 +23,7 @@ import lombok.NoArgsConstructor;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.data.domain.Pageable;
 
 @DisplayName("영양제 관리")
 public class SupplementAcceptanceTest extends AcceptanceTest {
@@ -100,10 +103,22 @@ public class SupplementAcceptanceTest extends AcceptanceTest {
     @Test
     @DisplayName("영양제를 상세조회한다")
     public void search() {
-        ExtractableResponse<Response> 김화란_클로렐라 = 영양제_생성되어있음("김화란 클로렐라", 클로렐라);
-        UUID id = 김화란_클로렐라.response().jsonPath().getUUID("id");
-        ExtractableResponse<Response> 김화란_클로렐라_상세_정보 = 영양제_상세_조회(id);
+        UUID 김화란_클로렐라 = 영양제_생성되어있음("김화란 클로렐라", 클로렐라);
+        ExtractableResponse<Response> 김화란_클로렐라_상세_정보 = 영양제_상세_조회(김화란_클로렐라);
         영양제_상세_조회됨(김화란_클로렐라_상세_정보.statusCode());
+    }
+
+
+    @Test
+    @DisplayName("영양제를 페이지별 조회한다")
+    public void searchByPage() {
+        Pageable 조회할_페이지 = 조회할_페이지가_설정_되어_있음();
+        영양제_생성되어있음("김화란 클로렐라", 클로렐라);
+        영양제_생성되어있음("뉴트리코어 클로렐라", 클로렐라);
+        영양제_생성되어있음("나우푸드 클로렐라", 클로렐라);
+
+        ExtractableResponse<Response> 영양제_페이지별_조회 = 영양제_페이지별_조회(조회할_페이지);
+        영양제_상세_조회됨(영양제_페이지별_조회.statusCode());
     }
 
 }
