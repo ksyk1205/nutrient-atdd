@@ -10,6 +10,7 @@
 
 include::combination.adoc[]
 
-[[path]]
+include::categories.adoc[]
 
 include::supplement.adoc[]
+

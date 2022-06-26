@@ -1,16 +1,15 @@
 package com.example.nutrient.ui;
 
 import com.example.nutrient.application.CategoryService;
-import com.example.nutrient.application.dto.category.CategoryCreateRequest;
-import com.example.nutrient.application.dto.category.CategoryCreateResponse;
-import com.example.nutrient.application.dto.category.CategoryUpdateRequest;
-import com.example.nutrient.application.dto.category.CategoryUpdateResponse;
+import com.example.nutrient.application.dto.category.*;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.net.URI;
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -40,7 +39,13 @@ public class CategoryRestController {
             @PathVariable UUID id
     ){
         categoryService.delete(id);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping()
+    public ResponseEntity<List<CategorySearchResponse>> search(){
+        List<CategorySearchResponse> categoryResult  = categoryService.search();
+        return ResponseEntity.ok().body(categoryResult);
     }
 
 }

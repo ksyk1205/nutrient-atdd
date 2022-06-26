@@ -5,7 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotEmpty;
-import java.util.UUID;
+import javax.validation.constraints.NotNull;
 
 @Data
 @NoArgsConstructor
@@ -13,6 +13,6 @@ import java.util.UUID;
 public class CategoryUpdateRequest {
     @NotEmpty
     private String name;
-    @NotEmpty
+    @NotNull
     private Integer depth;
 }
